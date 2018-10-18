@@ -1,8 +1,6 @@
 # ProjetoMC
 
-Repositório do projeto de MC
+RepositÃ³rio do projeto de MC
 
 Contribuidores:
-André Martins; Francisco Graça; Inês Véstia;
-
-(just testing in Arch Linux)
+AndrÃ© Martins; Francisco GraÃ§a; InÃªs VÃ©stia;
