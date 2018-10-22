@@ -1,52 +1,26 @@
-function [area, comp, mola1, mola2, k1, k2, forc, n] = gatherer
+function gatherer
 
-area = 0;
-comp = 0;
-mola1 = false;
-mola2 = false;
-k1 = 0;
-k2 = 0;
-forc = 0;
-n = 0;
-valid = true;
-while valid
-	try
-		area = input('Area da seccao reta => ');
-	catch error
-		errr;
-		valid = false;
-		break;
-	end
-	try
-		comp = input('Comprimento => ');
-	catch error
-		errr;
-		valid = false;
-		break;
-	end
-	mola1 = input('O primeiro apoio e uma mola? (Y,n): ', 's');
-	if mola1 == 'y' || mola1 == 'Y'
-		mola1 = true;
-		try
-			k1 = input('Constante => ')
-		catch error
-			errr;
-			valid = false;
-			break;
-		end
-	end
-	mola2 = input('O segundo apoio e uma mola? (Y,n): ', 's');
-	if mola2 == 'y' || mola2 == 'Y'
-		mola2 = true;
-		try
-			k2 = input('Constante => ');
-		catch error
-			errr;
-			valid = false;
-			break;
-		end
-	end
-	valid = false;
-	break;
 
+
+printf('\nArea da seccao reta:\n')
+area = input_tool;
+
+printf('\nComprimento da barra:\n')
+comp = input_tool;
+
+isMola1 = input('O primeiro apoio é uma mola? (Y,n): ', 's');
+if isMola1 == 'y' || isMola1 == 'Y'
+	isMola1 = true;
+	printf('\nConstante da mola:\n')
+	k1 = input_tool;
 end
+
+isMola2 = input('O segundo apoio é uma mola? (Y,n): ', 's');
+if isMola2 == 'y' || isMola2 == 'Y'
+	isMola2 = true;
+	printf('\nConstante da mola:\n')
+	k2 = input_tool;
+end
+
+force = 0;
+n = 0;

@@ -10,11 +10,10 @@
 % Instituto Superior Técnico, 2018
 
 clear
-clc
 repeat = true;
 erro_in = false;
 while repeat 
-
+	clc
 	printf('  EQUILIBRIO ESTATICO DE BARRAS \n ')
 	printf('\n1 - Introduza os dados da barra\n')
 	printf('2 - Barras conhecidas\n')
@@ -28,7 +27,7 @@ while repeat
 	a = str2num(a);
 
 	if a == 1
-		[area, comp, mola1, mola2, k1, k2, forc, n] = gatherer;
+		gatherer;
 	elseif a == 2
 		printf('Opcao 2\n')
 	elseif a == 0
@@ -37,6 +36,7 @@ while repeat
 		break;
 	else
 		erro_in = true;
+		clear
 		clc
 	end
 end
