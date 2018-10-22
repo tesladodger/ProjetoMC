@@ -27,12 +27,12 @@ while repeat
 	
 	a = str2num(a);
 
-	if a == 1  
-		printf('Opcao 1\n')
+	if a == 1
+		[area, comp, mola1, mola2, k1, k2, forc, n] = gatherer;
 	elseif a == 2
 		printf('Opcao 2\n')
 	elseif a == 0
-		printf('A sair\n')
+		printf('A sair...\n')
 		repeat = false;
 		break;
 	else
