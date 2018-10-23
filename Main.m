@@ -14,7 +14,7 @@ repeat = true;
 erro_in = false;
 while repeat 
 	clc
-	printf('  EQUILIBRIO ESTATICO DE BARRAS \n ')
+	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n ')
 	printf('\n1 - Introduza os dados da barra\n')
 	printf('2 - Barras conhecidas\n')
 	printf('0 - Terminar\n')
@@ -33,10 +33,10 @@ while repeat
 	elseif a == 0
 		printf('A sair...\n')
 		repeat = false;
+		clear;
 		break;
 	else
 		erro_in = true;
-		clear
 		clc
 	end
 end

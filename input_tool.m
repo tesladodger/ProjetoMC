@@ -1,4 +1,4 @@
-function someVar = input_tool
+function someVar = input_tool(acceptZero)
 
 %(Quase) todos os inputs sao tratados por esta funcao
 %Evita repetir codigo
@@ -13,8 +13,12 @@ while badInput
 		errr(ercode);
 		continue
 	end
-	if someVar <= 0
+	if someVar < 0
 		ercode = 1;
+		errr(ercode);
+		continue
+	elseif !acceptZero && someVar == 0
+		ercode = 2;
 		errr(ercode);
 		continue
 	else
