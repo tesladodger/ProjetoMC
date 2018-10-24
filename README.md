@@ -6,7 +6,6 @@ Contribuidores:
 André Martins; Francisco Graça; Inês Véstia;
 
 To do:
--input de n (malha)
 -todos os cálculos XD
 
 Notas:
