@@ -34,5 +34,5 @@ clc
 printf('Número de divisões (malha) que deseja para o cálculo\n')
 printf('(O valor será arredondado ao inteiro mais próximo)\n')
 n = input_tool(acceptZero);  % = false
-n = uint32(n)
+n = uint32(n);
 
