@@ -4,9 +4,12 @@ function errr(ercode)
 %Torna o codigo muito mais simples e limpo
 
 if ercode == 0
-	printf('\nErro: Input invalido!\n')
+	printf(repmat('\b',1,12));
+	printf('Erro: Input invalido!\n')
 elseif ercode == 1
-	printf('\nErro: Valor deve ser positivo\n')
+
+	printf('Erro: Valor deve ser positivo\n')
 elseif ercode == 2
-	printf('\nErro: Valor não pode ser nulo\n')
+
+	printf('Erro: Valor não pode ser nulo\n')
 end
