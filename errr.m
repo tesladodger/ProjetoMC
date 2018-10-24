@@ -4,7 +4,6 @@ function errr(ercode)
 %Torna o codigo muito mais simples e limpo
 
 if ercode == 0
-	printf(repmat('\b',1,12));
 	printf('Erro: Input invalido!\n')
 elseif ercode == 1
 
