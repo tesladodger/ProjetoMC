@@ -3,11 +3,15 @@ function gatherVars()
 acceptZero = false;
 
 clc
-printf('Área da secção reta:\n')
+printf('Módulo de Young do material (MPa):\n')
+ymodul = getVar(acceptZero);
+
+clc
+printf('Área da secção reta (m^2):\n')
 area = getVar(acceptZero);
 
 clc
-printf('Comprimento da barra:\n')
+printf('Comprimento da barra (m):\n')
 comp = getVar(acceptZero);
 
 clc
