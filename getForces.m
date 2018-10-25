@@ -17,7 +17,7 @@ while moreForces
 			space = repmat(' ', 1, ( 7 - length(s) ) );  % strings para poder mostrá-los
 			printf('%s%s', s, space)                     % com espaçamento uniforme.
 		end						     % Se o valor tiver mais de 7
-		printf('\nMódulo:   ')			             % caracteres, dá asneira.
+		printf('\nForça:    ')			             % caracteres, dá asneira.
 		for i = 1 : 1 : (iterator - 1)
 			s = num2str(Force(2,i));
 			space = repmat(' ', 1, ( 7 - length(s) ) );
@@ -41,7 +41,7 @@ while moreForces
 	disp('')
 	b = input('=> Acrescentar força? [Y/n] ', 's');
 	if b == 'Y' || b == 'y' || size(b) == 0
-		printf('\nPosição (x) da força: \n')
+		printf('\nPosição da força na barra (m): \n')
 		temp = getVar(acceptZero);
 		if temp <= comp
 			Force(1, iterator) = temp;
@@ -50,7 +50,7 @@ while moreForces
 			continue
 		end
 
-		printf('Módulo da força:\n')
+		printf('Valor da força (N):\n')
 		% O módulo da força pode ser negativo, logo, de forma a não
 		% sobrecomplicar a função getVar pede-se o seu valor 
 		% diretamente
