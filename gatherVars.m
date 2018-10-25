@@ -35,5 +35,5 @@ Force = getForces(comp);
 clc
 message = 'Número de divisões (malha) que deseja para o cálculo\n(O valor será arredondado ao inteiro mais próximo)\n'
 n = getVar(acceptZero, message);
-n = uint32(n);  %32bit é mais do que suficiente
+n = uint32(n);  % 32bit é mais do que suficiente
 
