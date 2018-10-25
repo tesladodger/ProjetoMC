@@ -2,14 +2,11 @@ function gatherVars()
 
 acceptZero = false;
 
-
 message = 'Módulo de Young do material (MPa):\n';
 ymodul = getVar(acceptZero, message);
 
-
 message = 'Área da secção reta (m^2):\n';
 area = getVar(acceptZero, message);
-
 
 message = 'Comprimento da barra (m):\n';
 comp = getVar(acceptZero, message);
@@ -35,5 +32,4 @@ Force = getForces(comp);
 clc
 message = 'Número de divisões (malha) que deseja para o cálculo\n(O valor será arredondado ao inteiro mais próximo)\n'
 n = getVar(acceptZero, message);
-n = uint32(n);  % 32bit é mais do que suficiente
-
+n = uint32(n);
