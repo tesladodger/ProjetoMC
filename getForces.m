@@ -28,11 +28,11 @@ while moreForces
 
 
 	if noForceError
-		printf('\nTem de introduzir pelo menos uma força')
+		printf('\nErro: Tem de introduzir pelo menos uma força!')
 		noForceError = false;
 	end
 	if biggerThanCompError
-		printf('\nIntroduza um valor menor que o comprimento da barra')
+		printf('\nErro: Introduza um valor menor que o comprimento da barra!')
 		biggerThanCompError = false;
 	end
 

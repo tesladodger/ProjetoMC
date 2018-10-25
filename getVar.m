@@ -9,6 +9,7 @@ while badInput
 	try
 		someVar = input('==> ');
 	catch error
+		printf('\r');
 		printError(0);
 		continue
 	end

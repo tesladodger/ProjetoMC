@@ -4,7 +4,7 @@ function printError(erCode)
 %Torna o codigo muito mais simples e limpo
 
 if erCode == 0
-	printf('Erro: Input invalido!\n')
+	printf('Erro: Input inválido!\n')
 elseif erCode == 1
 	printf('Erro: Valor deve ser positivo\n')
 elseif erCode == 2

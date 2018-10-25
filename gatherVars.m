@@ -3,7 +3,7 @@ function gatherVars()
 acceptZero = false;
 
 clc
-printf('Area da secção reta:\n')
+printf('Área da secção reta:\n')
 area = getVar(acceptZero);
 
 clc
@@ -26,9 +26,7 @@ if isMola2 == 'y' || isMola2 == 'Y' || size(isMola2) == 0
 	k2 = getVar(acceptZero);
 end
 
-
 Force = getForces(comp);
-
 
 clc
 printf('Número de divisões (malha) que deseja para o cálculo\n')
