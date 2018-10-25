@@ -1,4 +1,4 @@
-function gatherVars()
+function gatherVars
 
 acceptZero = false;
 
