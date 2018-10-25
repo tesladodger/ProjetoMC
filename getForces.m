@@ -41,8 +41,8 @@ while moreForces
 	disp('')
 	b = input('=> Acrescentar força? [Y/n] ', 's');
 	if b == 'Y' || b == 'y' || size(b) == 0
-		printf('\nPosição da força na barra (m): \n')
-		temp = getVar(acceptZero);
+		message = 'Posição da força na barra (m):\n';
+		temp = getVar(acceptZero, message);
 		if temp <= comp
 			Force(1, iterator) = temp;
 		else 
@@ -50,16 +50,20 @@ while moreForces
 			continue
 		end
 
-		printf('Valor da força (N):\n')
+		message = 'Valor da força (N):\n';
 		% O módulo da força pode ser negativo, logo, de forma a não
 		% sobrecomplicar a função getVar pede-se o seu valor 
 		% diretamente
+		clc
+		printf(message)
 		badInput = true;
 		while badInput
 			try
 				temp = input('==> ');
 			catch error
-				errr(0);
+				clc
+				printf(message)
+				printError(0);
 				continue
 			end
 			badInput = false;
