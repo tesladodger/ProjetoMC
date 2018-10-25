@@ -1,4 +1,4 @@
-function Force = force_gatherer(comp)
+function Force = getForces(comp)
 
 noForceError = false;
 biggerThanCompError = false;
@@ -6,6 +6,7 @@ acceptZero = true;
 iterator = 1;
 moreForces = true;
 while moreForces
+
 	clc
 	printf('Forças aplicadas na barra:')
 	
@@ -41,7 +42,7 @@ while moreForces
 	b = input('=> Acrescentar força? [Y/n] ', 's');
 	if b == 'Y' || b == 'y' || size(b) == 0
 		printf('\nPosição (x) da força: \n')
-		temp = input_tool(acceptZero);
+		temp = getVar(acceptZero);
 		if temp <= comp
 			Force(1, iterator) = temp;
 		else 
@@ -51,7 +52,7 @@ while moreForces
 
 		printf('Módulo da força:\n')
 		% O módulo da força pode ser negativo, logo, de forma a não
-		% sobrecomplicar a função input_tool pede-se o seu valor 
+		% sobrecomplicar a função getVar pede-se o seu valor 
 		% diretamente
 		badInput = true;
 		while badInput

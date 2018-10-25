@@ -11,23 +11,23 @@
 
 clear
 repeat = true;
-erro_in = false;
+badInput = false;
 while repeat 
 	clc
 	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n ')
 	printf('\n1 - Introduza os dados da barra\n')
 	printf('2 - Barras conhecidas\n')
 	printf('0 - Terminar\n')
-	if erro_in
+	if badInput
 		printf('Erro de input\n')
-		erro_in = false;
+		badInput = false;
 	end
 	a = input('==> ', 's');
 	
 	a = str2num(a);
 
 	if a == 1
-		gatherer;
+		gatherVars();
 	elseif a == 2
 		printf('Opcao 2\n')
 	elseif a == 0
@@ -36,7 +36,7 @@ while repeat
 		clear;
 		break;
 	else
-		erro_in = true;
+		badInput = true;
 		clc
 	end
 end
