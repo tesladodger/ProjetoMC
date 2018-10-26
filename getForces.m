@@ -41,8 +41,11 @@ while moreForces
 	disp('')
 	b = input('=> Acrescentar força? [Y/n] ', 's');
 	if b == 'Y' || b == 'y' || size(b) == 0
+		clear b;  % Não sei como é que descobri este bug, mas se o utilizador
+		          % introduzir b no input em baixo o valor ou é aceite ou
+			  % dá-se um erro de nonconformant arguments.
 		message = 'Posição da força na barra (m):\n';
-		temp = getVar(acceptZero, message);
+		temp = getInput(acceptZero, message);
 		if temp <= comp
 			Force(1, iterator) = temp;
 		else 
@@ -51,8 +54,8 @@ while moreForces
 		end
 
 		message = 'Valor da força (N):\n';
-		% O módulo da força pode ser negativo, logo, de forma a não
-		% sobrecomplicar a função getVar pede-se o seu valor 
+		% O valor da força pode ser negativo, logo, de forma a não
+		% sobrecomplicar a função getInput pede-se o seu valor 
 		% diretamente
 		clc
 		printf(message)

@@ -1,4 +1,4 @@
-function someVar = getVar(acceptZero, message)
+function someVar = getInput(acceptZero, message)
 
 % (Quase) todos os inputs sao tratados por esta função
 % Evita repetir código
