@@ -1,10 +1,12 @@
 function Force = getForces(comp)
 
-noForceError = false;
+
+noForceError        = false;
 biggerThanCompError = false;
-acceptZero = true;
-iterator = 1;
-moreForces = true;
+acceptZero          = true;
+iterator            = 1;
+
+moreForces          = true;
 while moreForces
 
 	clc
