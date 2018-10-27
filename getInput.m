@@ -1,8 +1,8 @@
 function someVar = getInput(acceptZero, message)
 
-% (Quase) todos os inputs sao tratados por esta função
-% Evita repetir código
-% Testa se são números e maiores ou iguais a zero
+% (Quase) todos os inputs são tratados por esta função.
+% Evita repetir código.
+% Testa se são números e maiores ou iguais a zero.
 
 clc
 printf(message)
