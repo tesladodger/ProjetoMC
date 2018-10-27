@@ -33,3 +33,6 @@ clc
 message = ('Número de divisões (malha) que deseja para o cálculo\n(O valor será arredondado ao inteiro mais próximo)\n')
 n = getInput(acceptZero, message);
 n = uint32(n);
+if !( n & 1 )
+	n += 1;
+end
