@@ -2,6 +2,9 @@
 # Magento Default Files    #
 #--------------------------#
 
+#Session info
+octave-workspace
+
 /app/etc/local.xml
 
 /media/*
