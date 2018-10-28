@@ -5,6 +5,11 @@
 #Session info
 octave-workspace
 
+#LaTeX
+*.aux
+*.dvi
+*.log
+
 /app/etc/local.xml
 
 /media/*

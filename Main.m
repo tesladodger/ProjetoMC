@@ -1,7 +1,7 @@
 % Projeto de MC
 % Este programa calcula o deslocamento axial de uma barra
 % sujeita a variadas forças (escolhidas pelo utilizador),
-% e sobre apoios rigidos ou molas.
+% e sobre apoios rígidos ou molas.
 
 % Autores:
 % André Martins, 87149
