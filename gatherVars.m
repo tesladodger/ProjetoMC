@@ -1,6 +1,9 @@
 function gatherVars()
 
 % Recolhe as variáveis necessárias para o posterior cálculo.
+% Chama a função que efetua os cálculos, evitando passar variáveis
+% para o Main
+
 
 acceptZero = false;
 
