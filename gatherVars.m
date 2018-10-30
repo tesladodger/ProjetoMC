@@ -35,7 +35,7 @@ Force = getForces(comp);
 clc
 message = ('Número de divisões (malha) que deseja para o cálculo\n(O valor será arredondado ao inteiro mais próximo)\n')
 n = getInput(acceptZero, message);
-n = uint32(n);
-if !( n & 1 )
-	n += 1;
+n = uint32(n);   % Se utilizador inserir um número entre 0 e 0.5
+if n == 0        % o valor é arredondado a 0. Como nós não queremos
+	n += 1;  % isso, somamos 1.
 end
