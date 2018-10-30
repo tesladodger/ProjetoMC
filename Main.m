@@ -29,7 +29,7 @@ while repeat
 	if a == 1
 		gatherVars();
 	elseif a == 2
-		printf('Opcao 2\n')
+		printf('Opção 2\n')
 	elseif a == 0
 		printf('A sair...\n')
 		repeat = false;
