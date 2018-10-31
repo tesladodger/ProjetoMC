@@ -13,6 +13,8 @@ message = ('Área da secção reta (m^2):\n');
 area    = getInput(acceptZero, message);
 message = ('Comprimento da barra (m):\n');
 comp    = getInput(acceptZero, message);
+message = ('Carga axial distribuída (N/m):\n')
+caxial  = getForce(message);
 
 clc
 isMola1 = input('O primeiro apoio é uma mola? [Y/n]: ', 's');
@@ -22,15 +24,20 @@ if isMola1 == 'y' || isMola1 == 'Y' || size(isMola1) == 0
 	k1      = getInput(acceptZero, message);
 end
 
-clc
-isMola2 = input('O segundo apoio é uma mola? [Y/n]: ', 's');
-if isMola2 == 'y' || isMola2 == 'Y' || size(isMola2) == 0
-	isMola2 = true;
-	message = ('Constante da mola:\n');
-	k2      = getInput(acceptZero, message);
+if isMola1
+	clc
+	isMola2 = input('O segundo apoio é uma mola? [Y/n]: ', 's');
+	if isMola2 == 'y' || isMola2 == 'Y' || size(isMola2) == 0
+		isMola2 = true;
+		message = ('Constante da mola:\n');
+		k2      = getInput(acceptZero, message);
+	end
 end
 
-Force = getForces(comp);
+if !isMola1
+	isForce = input('Existe um força aplicada na extremidade? [Y/n]: ', 's');
+
+
 
 clc
 message = ('Número de divisões (malha) que deseja para o cálculo\n(O valor será arredondado ao inteiro mais próximo)\n')
