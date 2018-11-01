@@ -19,7 +19,7 @@ while repeat
 	printf('2 - Barras conhecidas\n')
 	printf('0 - Terminar\n')
 	if badInput
-		printf('Erro de input\n')
+		printError(0);
 		badInput = false;
 	end
 	a = input('==> ', 's');

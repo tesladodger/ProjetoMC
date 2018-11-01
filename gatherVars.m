@@ -25,7 +25,7 @@ end
 
 clc
 drawState(state);
-a = input('Existe uma mola na extremidade direita da barra? [Y/n]: ', 's');
+a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	state += 2; 
 	data.isMola1 = true;
@@ -38,7 +38,7 @@ end
 if data.isMola1
 	clc
 	drawState(state);
-	b = input('Deseja substituir a parede por uma segunda mola? [Y/n]: ', 's');
+	b = input('Deseja substituir a parede por uma segunda mola? [Y/n] ', 's');
 	if b == 'y' || b == 'Y' || size(b) == 0
 		state = 4;
 		data.isMola2 = true;
@@ -52,7 +52,7 @@ end
 if !data.isMola1
 	clc
 	drawState(state);
-	c = input('Existe um força aplicada na extremidade? [Y/n]: ', 's');
+	c = input('Existe um força aplicada na extremidade? [Y/n] ', 's');
 	if c == 'y' || c == 'Y' || size(c) == 0
 		data.isForce = true;
 		message    = ('Qual o valor da força (N)?\n');
