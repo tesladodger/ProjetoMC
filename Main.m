@@ -23,14 +23,12 @@ while repeat
 		badInput = false;
 	end
 	a = input('==> ', 's');
-	
-	a = str2num(a);
 
-	if a == 1
+	if a == '1'
 		gatherVars();
-	elseif a == 2
+	elseif a == '2'
 		printf('Opção 2\n')
-	elseif a == 0
+	elseif a == '0' || a == 'q'
 		printf('A sair...\n')
 		repeat = false;
 		clear;

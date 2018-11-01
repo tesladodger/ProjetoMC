@@ -1,35 +1,36 @@
-function someVar = getInput(acceptZero, message, state)
+function someVar = getInput(message, state, canBeNegative)
 
-% (Quase) todos os inputs são tratados por esta função.
-% Como qualquer função mimada, apenas aceita inputs positivos.
+% (Quase) todos os inputs são tratados por 
+% esta função. Aceita valores positivos ou
+% negativos, conforme necessário.
 
 clc
-drawState(state)
-printf(message)
+drawState(state);
+printf(message);
 badInput = true;
 while badInput
 	try
 		someVar = input('==> ');
-	catch error
+	catch   error
 		clc
 		drawState(state);
 		printf(message);
 		printError(0);
 		continue
 	end
-	if size(someVar) == 0
+	if      size(someVar) == 0
 		clc
 		drawState(state);
 		printf(message);
 		printError(0);
 		continue
-	elseif someVar < 0
+	elseif  someVar < 0 && !canBeNegative
 		clc
 		drawState(state);
 		printf(message);
 		printError(1);
 		continue
-	elseif !acceptZero && someVar == 0
+	elseif  someVar == 0 && !canBeNegative
 		clc
 		drawState(state);
 		printf(message);
