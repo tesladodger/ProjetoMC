@@ -56,7 +56,7 @@ if !data.isMola1
 	c = input('Existe um força aplicada na extremidade? [Y/n]: ', 's');
 	if c == 'y' || c == 'Y' || size(c) == 0
 		data.isForce = true;
-		message    = ('Qual o valor da força?\n');
+		message    = ('Qual o valor da força (N)?\n');
 		data.force = getForce(message, state);
 		if data.force >= 0
 			state += 5;
@@ -70,13 +70,13 @@ end
 
 
 clc
-part1 = ('Número de divisões (malha) que deseja para o cálculo\n');
-part2 = ('(O valor será arredondado ao inteiro mais próximo)\n');
+part1   = ('Número de divisões (malha) que deseja para o cálculo\n');
+part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
 message = strcat(part1, part2);
-n      = getInput(acceptZero, message, state);
-data.n = uint32(n);   % Se utilizador inserir um número entre 0 e 0.5
-if data.n == 0        % o valor é arredondado a 0. Como nós não queremos
-	data.n += 1;  % isso, somamos 1.
+n       = getInput(acceptZero, message, state);
+data.n  = uint32(n);   % Se utilizador inserir um número entre 0 e 0.5
+if data.n == 0         % o valor é arredondado a 0. Como nós não queremos
+	data.n += 1;   % isso, somamos 1.
 end
 disp(data)
 pause
