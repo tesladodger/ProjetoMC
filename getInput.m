@@ -1,6 +1,6 @@
 function someVar = getInput(message, state, canBeNegative)
 
-% (Quase) todos os inputs são tratados por 
+% Todos os inputs numéricos são tratados por 
 % esta função. Aceita valores positivos ou
 % negativos, conforme necessário.
 

@@ -10,76 +10,76 @@ function drawState(state)
 
 if state == 401 % Estado ainda não interessa
 	return
-elseif state == 0
+elseif  state == 0
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|           a             |\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 1
+	printf('/|<--------- L ------------>\n')
+elseif  state == 1
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|           a             |\n')
 	printf('/|  <-  <-  <-  <-  <-  <- |\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 2
+	printf('/|<--------- L ------------>\n')
+elseif  state == 2
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|            a            |    k1\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |∫∫∫∫∫∫∫∫∫∫\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 3
+	printf('/|<--------- L ------------>\n')
+elseif  state == 3
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|             a           |    k2\n')
 	printf('/|  <-  <-  <-  <-  <-  <- |∫∫∫∫∫∫∫∫∫∫\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 4
+	printf('/|<--------- L ------------>\n')
+elseif  state == 4
 	printf('\n')
 	printf('       _________________________\n')
-	printf('      |                         |\n')
+	printf('  k2  |            a            |  k1\n')
 	printf('∫∫∫∫∫∫| ->  ->  ->  ->  ->  ->  |∫∫∫∫∫∫\n')
 	printf('      |_________________________|\n')
 	printf('\n')
-	printf('\n')
-elseif state == 5
+	printf('/|<--------- L ------------>\n')
+elseif  state == 5
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|             a           |    F\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |=======>\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 6
+	printf('/|<--------- L ------------>\n')
+elseif  state == 6
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|             a           |    F\n')
 	printf('/|  <-  <-  <-  <-  <-  <- |=======>\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 7
+	printf('/|<--------- L ------------>\n')
+elseif  state == 7
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|             a           |    F\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |<=======\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
-elseif state == 8
+	printf('/|<--------- L ------------>\n')
+elseif  state == 8
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|                         |\n')
+	printf('/|             a           |    F\n')
 	printf('/|  <-  <-  <-  <-  <-  <- |<=======\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
-	printf('/|\n')
+	printf('/|<--------- L ------------>\n')
 end
