@@ -1,8 +1,7 @@
 function someVar = getInput(acceptZero, message, state)
 
 % (Quase) todos os inputs são tratados por esta função.
-% Evita repetir código.
-% Testa se são números e maiores ou iguais a zero.
+% Como qualquer função mimada, apenas aceita inputs positivos.
 
 clc
 drawState(state)
@@ -38,6 +37,6 @@ while badInput
 		continue
 	else
 		badInput = false;
-		break;
+		return
 	end
-end 
+end
