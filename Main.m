@@ -1,7 +1,9 @@
-% Projeto de MC
+% Projeto de MC / JF-17
 % Este programa calcula o deslocamento axial de uma barra
-% sujeita a variadas forças (escolhidas pelo utilizador),
-% e sobre apoios rígidos ou molas.
+% sujeita a uma carga axial uniforme. O utilizador pode
+% também aplicar uma força ou uma mola na extremidade da 
+% barra, estando a outra extremidade encastrada.
+% Pode também suspender a barra entre duas molas.
 
 % Autores:
 % André Martins, 87149
