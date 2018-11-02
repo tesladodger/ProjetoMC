@@ -62,9 +62,22 @@ if !data.isMola1
 		else
 			state += 7;
 		end
+	else
+		data.isForce = false;  % Apenas necessário para condição seguinte
 	end
 end
 
+% Dúvida: se pedimos as condições, ie. o deslocamento, não deve ser
+% necessária esta opção
+if !data.isMola1 && !data.isForce
+	clc
+	drawState(state);
+	d = input('Deseja encastrar a barra entre duas paredes? [Y/n] ', 's');
+	if d == 'y' || d == 'Y' || size(d) == 0
+		data.isWall = true;
+		state += 9;
+	end
+end
 
 clc
 part1   = ('Número de divisões (malha) que deseja para o cálculo\n');
