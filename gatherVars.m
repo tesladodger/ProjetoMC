@@ -90,5 +90,8 @@ if data.n == 0         % o valor é arredondado a 0. Como nós não queremos
 end
 
 goToCalculations = reviewData(data)
-
-pause
+if goToCalculations
+	calculate(data);
+else
+	return;
+end
