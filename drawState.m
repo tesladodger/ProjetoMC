@@ -4,7 +4,8 @@ function drawState(state)
 % em cada momento, permitindo-nos desenhá-lo no terminal,
 % com o mínimo de variáveis. Isto ajuda o utilizador a 
 % perceber se está a introduzir corretamente as caracterís-
-% ticas do problema.
+% ticas do problema (uma imagem ASCII vale mais que 1000
+% caracteres).
 % Nota: sim, ∫∫∫∫∫∫∫∫∫∫ é uma mola!
 
 
@@ -37,7 +38,7 @@ elseif  state == 2
 elseif  state == 3
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|           a             |    k2\n')
+	printf('/|           a             |    k1\n')
 	printf('/|  <-  <-  <-  <-  <-  <- |∫∫∫∫∫∫∫∫∫∫\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
