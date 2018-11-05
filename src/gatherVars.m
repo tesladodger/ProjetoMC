@@ -86,10 +86,10 @@ message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
 data.n  = uint32(n);   % Se utilizador inserir um número entre 0 e 0.5
 if data.n == 0         % o valor é arredondado a 0. Como nós não queremos
-	data.n += 1;   % isso, somamos 1.
+	data.n += 1;       % isso, somamos 1.
 end
 
-goToCalculations = reviewData(data)
+goToCalculations = reviewData(data);
 if goToCalculations
 	calculate(data);
 else

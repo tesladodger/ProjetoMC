@@ -5,10 +5,10 @@ function goToCalculations = reviewData(data)
 
 clc
 drawState(data.state);
-printf('Módulo de Young:       %d(MPa)\n', data.ymodul     )
-printf('Área da secção reta:   %d(m²) \n', data.area       )
-printf('Comprimento da barra:  %d(m)  \n', data.comp       )
-printf('Carga axial:           %d(N/m)\n', data.cargaAxial )
+printf('Módulo de Young:       %d MPa \n', data.ymodul     )
+printf('Área da secção reta:   %d m²  \n', data.area       )
+printf('Comprimento da barra:  %d m   \n', data.comp       )
+printf('Carga axial:           %d N/m \n', data.cargaAxial )
 if data.isMola1
 	printf('Constante k1:          %d \n', data.k1 )
 	if data.isMola2
@@ -16,7 +16,7 @@ if data.isMola1
 	end
 end
 try % Tenho quase a certeza que não devo fazer isto mas é meia
-	if data.isForce  % noite e já não consigo pensar...
+	if data.isForce         % noite e já não consigo pensar...
 		printf('Força F:               %d(N) \n', data.force )
 	end
 end
