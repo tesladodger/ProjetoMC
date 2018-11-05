@@ -1,0 +1,14 @@
+F-17. A  equação  diferencial  que  representa  o  equilíbrio  estático  duma  barra  de  comprimento  L  é, 
+–EA*(d²u/dx²)=f(x), 
+onde  E  representa  o  módulo  de  Young  do  material,  A  área  da  secção  da  secção 
+transversal,  u(x)  o  deslocamento  axial  da  barra  e  f(x)  a  carga  axial  distribuída  ao  longo  da  barra. 
+Considere ainda as possibilidades de numa das extremidades da barra existir uma força aplicada e de 
+a  barra  estar  fixa  por  mola(s).  Substituindo  a  segunda  derivada  por  uma  diferença  finita,  numa 
+malha de espaçamento uniforme, obtém-se um sistema de equações lineares cuja solução fornecerá 
+uma  aproximação  do  deslocamento  da  barra.  Seguindo  a  metodologia  descrita,  desenvolva  uma 
+implementação  computacional  em  MatLab  para  efectuar  o  cálculo do  deslocamento.  Teste  o 
+programa  com  diferentes  opções  para  a  carga  axial  f(x).  Considere  cargas  axiais  para  as  quais  se 
+conheça a solução exacta. Determine o erro existente e apresente o gráfico. Elabore um gráfico (em 
+escala logarítmica) da evolução do erro com a diminuição do espaçamento dos nós e verifique se o 
+erro  possui  um  comportamento  assimptótico  de  acordo  com  o  esperado  em  termos  teóricos.  NÃO 
+UTILIZE PROGRAMAÇÃO SIMBÓLICA (syms).
