@@ -5,9 +5,9 @@ function goToCalculations = reviewData(data)
 
 clc
 drawState(data.state);
-printf('Módulo de Young:       %d MPa \n', data.ymodul     )
-printf('Área da secção reta:   %d m²  \n', data.area       )
-printf('Comprimento da barra:  %d m   \n', data.comp       )
+printf('Módulo de Young:       %d MPa \n', data.ymodul )
+printf('Área da secção reta:   %d m²  \n', data.area   )
+printf('Comprimento da barra:  %d m   \n', data.comp   )
 if data.isMola1
 	printf('Constante k1:          %d \n', data.k1 )
 	if data.isMola2
@@ -20,7 +20,7 @@ try % Tenho quase a certeza que não devo fazer isto mas é meia
 	end
 end
 printf('Divisões para cálculo: %d \n', data.n )
-
+% todo : disp(data.cargaAxial)
 a = input('Deseja proceguir para os cálculos? [Y/n] ', 's');
 if a == 'Y' || a == 'y' || size(a) == 0
 	goToCalculations = true;
