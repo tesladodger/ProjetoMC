@@ -9,7 +9,7 @@ function drawState(state)
 % Nota: sim, ∫∫∫∫∫∫∫∫∫∫ é uma mola!
 
 
-if state == 401 % Estado ainda não interessa
+if state == 403 % Estado ainda não interessa
 	return
 elseif  state == 0
 	printf('/|\n')
