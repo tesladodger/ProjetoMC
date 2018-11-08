@@ -104,12 +104,13 @@ if !data.isMola1 && !data.isForce
 end
 
 clc
-part1   = ('Número de divisões (malha) que deseja para o cálculo\n');
+part1   = ('Número de pontos para o cálculo (maior ou igual a 3):\n');
 part2   = ('(O valor será arredondado ao inteiro ímpar mais próximo)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
-data.n  = uint32(n);  
-if !(mod(data.n, 2)) 
+data.n  = uint32(n);
+if (data.n < 3) data.n = 3; end
+if !(mod(data.n, 2)) % Se não for ímpar
 	data.n += 1;
 end
 
