@@ -8,7 +8,6 @@ drawState(data.state);
 printf('Módulo de Young:       %d MPa \n', data.ymodul     )
 printf('Área da secção reta:   %d m²  \n', data.area       )
 printf('Comprimento da barra:  %d m   \n', data.comp       )
-printf('Carga axial:           %d N/m \n', data.cargaAxial )
 if data.isMola1
 	printf('Constante k1:          %d \n', data.k1 )
 	if data.isMola2

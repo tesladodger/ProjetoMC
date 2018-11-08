@@ -16,12 +16,38 @@ message         = ('Área da secção reta (m^2):\n');
 data.area       = getInput(message, data.state, 0);
 message         = ('Comprimento da barra (m):\n');
 data.comp       = getInput(message, data.state, 0);
-message         = ('Carga axial distribuída (N/m):\n')
-data.cargaAxial = getInput(message, data.state, 1);
-
-if (data.cargaAxial >= 0) data.state = 0;
-else data.state = 1;
+badInput = false;
+repeat = true;
+while repeat
+	clc
+	printf('  Qual a função que representa a carga axial distribuída?\n')
+	printf('1 - Polinómio (grau 6)\n')
+	printf('2 - sen(πx/L) \n')
+	printf('3 - cos(πx/L) \n')
+	printf('4 - exp(x/l)  \n')
+	if badInput
+		printError(0);
+		badInput = false;
+	end
+	f = input('==>  ', 's');
+	if f == '1' 
+		data.cargaAxial = getPolinomio();
+		break
+	elseif f == '2'
+		data.cargaAxial = @(x,L) sin(pi*x/L);
+		break
+	elseif f == '3'
+		data.cargaAxial = @(x,L) cos(pi*x/L);
+		break
+	elseif f == '4'
+		data.cargaAxial = @(x,L) exp(x/L);
+		break
+	else
+		badInput = true;
+	end
 end
+
+data.state = 0;
 
 clc
 drawState(data.state);
@@ -67,8 +93,6 @@ if !data.isMola1
 	end
 end
 
-% Dúvida: se pedimos as condições, ie. o deslocamento, não deve ser
-% necessária esta opção
 if !data.isMola1 && !data.isForce
 	clc
 	drawState(data.state);
@@ -81,12 +105,12 @@ end
 
 clc
 part1   = ('Número de divisões (malha) que deseja para o cálculo\n');
-part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
+part2   = ('(O valor será arredondado ao inteiro ímpar mais próximo)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
-data.n  = uint32(n);   % Se utilizador inserir um número entre 0 e 0.5
-if data.n == 0         % o valor é arredondado a 0. Como nós não queremos
-	data.n += 1;       % isso, somamos 1.
+data.n  = uint32(n);  
+if !(mod(data.n, 2)) 
+	data.n += 1;
 end
 
 goToCalculations = reviewData(data);
