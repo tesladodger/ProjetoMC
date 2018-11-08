@@ -15,11 +15,15 @@
 % Inês Véstia      87209
 % Instituto Superior Técnico, 2018
 
+
+
 clear
+format long;
 repeat   = true;
 badInput = false;
 
-while repeat 
+
+while repeat
 	clc
 	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n\n')
 	printf('1 - Introduza os dados da barra \n')
