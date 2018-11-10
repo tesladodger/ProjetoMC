@@ -1,4 +1,4 @@
-function gatherVars()
+function gatherVars(useCustomFunc)
 
 % Recolhe as variáveis necessárias para o posterior cálculo.
 % Todas estas variáveis estão sob a classe data.
@@ -19,36 +19,40 @@ message         = ('Área da secção reta (m^2):\n');
 data.area       = getInput(message, data.state, 0);
 message         = ('Comprimento da barra (m):\n');
 data.comp       = getInput(message, data.state, 0);
-badInput = false;
-while true
-	clc
-	printf('  Qual a função que representa a carga axial distribuída?\n')
-	printf('1 - Polinómio (grau 6)\n')
-	printf('2 - sen(πx/L) \n')
-	printf('3 - cos(πx/L) \n')
-	printf('4 - exp(x/l)  \n')
-	if badInput
-		printError(0);
-		badInput = false;
-	end
-	f = input('==>  ', 's');
-	if f == '1'
-		[data.cargaAxial, data.funcstr] = getPolinomio();
-		break
-	elseif f == '2'
-		data.funcstr    = ('sen(πx/L)');
-		data.cargaAxial = @(x,L) sin(pi*x/L);
-		break
-	elseif f == '3'
-		data.funcstr    = ('cos(πx/L)');
-		data.cargaAxial = @(x,L) cos(pi*x/L);
-		break
-	elseif f == '4'
-		data.funcstr    = ('exp(x/l)');
-		data.cargaAxial = @(x,L) exp(x/L);
-		break
-	else
-		badInput = true;
+if useCustomFunc
+	[data.cargaAxial, data.funcstr] = getCustomFunc();
+else
+	badInput = false;
+	while true
+		clc
+		printf('  Qual a função que representa a carga axial distribuída?\n')
+		printf('1 - Polinómio (grau 6)\n')
+		printf('2 - sen(πx/L) \n')
+		printf('3 - cos(πx/L) \n')
+		printf('4 - exp(x/l)  \n')
+		if badInput
+			printError(0);
+			badInput = false;
+		end
+		f = input('==>  ', 's');
+		if f == '1'
+			[data.cargaAxial, data.funcstr] = getPolinomio();
+			break
+		elseif f == '2'
+			data.funcstr    = ('sen(πx/L)');
+			data.cargaAxial = @(x,L) sin(pi*x/L);
+			break
+		elseif f == '3'
+			data.funcstr    = ('cos(πx/L)');
+			data.cargaAxial = @(x,L) cos(pi*x/L);
+			break
+		elseif f == '4'
+			data.funcstr    = ('exp(x/l)');
+			data.cargaAxial = @(x,L) exp(x/L);
+			break
+		else
+			badInput = true;
+		end
 	end
 end
 
@@ -59,28 +63,14 @@ drawState(data.state);
 a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	data.state += 2; 
-	data.isMola1 = true;
-	message = ('Constante da mola k1:\n');
-	data.k1 = getInput(message, data.state, 0);
+	data.isMola = true;
+	message = ('Constante da mola:\n');
+	data.k = getInput(message, data.state, 0);
 else
-	data.isMola1 = false;
+	data.isMola = false;
 end
 
-if data.isMola1
-	clc
-	drawState(data.state);
-	b = input('Deseja substituir a parede por uma segunda mola? [Y/n] ', 's');
-	if b == 'y' || b == 'Y' || size(b) == 0
-		data.state = 4;
-		data.isMola2 = true;
-		message = ('Constante da mola k2:\n');
-		data.k2 = getInput(message, data.state, 0);
-	else
-		data.isMola2 = false;
-	end
-end
-
-if !data.isMola1
+if !data.isMola
 	clc
 	drawState(data.state);
 	c = input('Existe um força aplicada na extremidade? [Y/n] ', 's');
@@ -98,7 +88,7 @@ if !data.isMola1
 	end
 end
 
-if !data.isMola1 && !data.isForce
+if !data.isMola && !data.isForce
 	clc
 	drawState(data.state);
 	d = input('Deseja encastrar a barra entre duas paredes? [Y/n] ', 's');

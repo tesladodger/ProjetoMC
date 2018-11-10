@@ -10,11 +10,8 @@ drawState(data.state);
 printf('Módulo de Young:       %d MPa \n', data.ymodul )
 printf('Área da secção reta:   %d m²  \n', data.area   )
 printf('Comprimento da barra:  %d m   \n', data.comp   )
-if data.isMola1
-	printf('Constante k1:          %d \n', data.k1 )
-	if data.isMola2
-		printf('Constante k2:          %d \n', data.k2 )
-	end
+if data.isMola
+	printf('Constante k:           %d \n', data.k )
 end
 try % Tenho quase a certeza que não devo fazer isto mas é meia
 	if data.isForce         % noite e já não consigo pensar...
