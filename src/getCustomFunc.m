@@ -1,5 +1,10 @@
 function [fun, str] = getCustomFunc();
 
+% Pede input da função que representa a distribuição do esforço axial.
+% Não necessita de argumentos de entrada.
+% Tem como argumentos de saída a function handle 'fun' e a string
+% que representa essa função (ver reviewData).
+
 badInput = false;
 while true
 	clc
@@ -31,13 +36,14 @@ while true
 	break;
 end
 
-expression = '@.*?\)'  % regular expression breakdown:
+expression = '@.*?\)'  
+% regular expression breakdown:
 % @  -> primeiro caracter a procurar;
-% .  -> iguala qualquer caracter na linha;
-% *  -> iguala 0 ou mais do token anterior;
+% .  -> iguala qualquer caracter;
+% *  -> quantificador: iguala 0 ou mais igualdades do token anterior;
 % ?  -> torna o quantificador preguiçoso, igualando o menor número
 %	    possível de caracteres;
 % \) -> último caracter (tem de ser escapado);
-str = regexprep(str,expression,'');  % substituir o resultado
-									 % da regex por ''
-str = strtrim(str);                  % eliminar espaços iniciais
+str = regexprep(str,expression,''); % substituir o resultado
+									% da regex por ''
+str = strtrim(str);                 % eliminar espaços iniciais
