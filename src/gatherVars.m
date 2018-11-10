@@ -4,8 +4,8 @@ function gatherVars(useCustomFunc)
 % Todas estas variáveis estão sob a classe data.
 % Chama a função que resolve a equação diferencial pelo
 % método de diferenças finitas (calculate).
-% Não necessita de argumentos de entrada, e não retorna
-% nenhuma variável ao Main.
+% Recebe do Main o boolean useCustomFunc.
+% Não retorna nenhuma variável ao Main.
 % TO DO:
 % - Decidir se Enter significa sim ou não;
 
@@ -62,7 +62,7 @@ clc
 drawState(data.state);
 a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
-	data.state += 2; 
+	data.state += 1; 
 	data.isMola = true;
 	message = ('Constante da mola:\n');
 	data.k = getInput(message, data.state, 0);
@@ -79,9 +79,9 @@ if !data.isMola
 		message    = ('Qual o valor da força (N)?\n');
 		data.force = getInput(message, data.state, 1);
 		if data.force >= 0
-			data.state += 5;
+			data.state += 2;
 		else
-			data.state += 7;
+			data.state += 3;
 		end
 	else
 		data.isForce = false;  % Apenas necessário para condição seguinte
@@ -94,7 +94,7 @@ if !data.isMola && !data.isForce
 	d = input('Deseja encastrar a barra entre duas paredes? [Y/n] ', 's');
 	if d == 'y' || d == 'Y' || size(d) == 0
 		data.isWall = true;
-		data.state += 9;
+		data.state += 4;
 	end
 end
 
