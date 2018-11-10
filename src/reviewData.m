@@ -1,7 +1,9 @@
 function goToCalculations = reviewData(data)
 
-% Mostra as variáveis introduzidas e dá
-% a opção de continuar ou recomeçar.
+% Mostra ao utilizador as variáveis introduzidas e dá
+% a opção de continuar ou recomeçar (regressar ao Main).
+% Argumentos de entrada: variáveis presentes em data;
+% Argumentos de saída: boolean -> goToCalculations;
 
 clc
 drawState(data.state);
@@ -20,7 +22,8 @@ try % Tenho quase a certeza que não devo fazer isto mas é meia
 	end
 end
 printf('Divisões para cálculo: %d \n', data.n )
-% todo : disp(data.cargaAxial)
+printf('Função da carga axial: %s \n', data.funcstr)
+printf('\n')
 a = input('Deseja proceguir para os cálculos? [Y/n] ', 's');
 if a == 'Y' || a == 'y' || size(a) == 0
 	goToCalculations = true;

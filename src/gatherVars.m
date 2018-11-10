@@ -1,8 +1,11 @@
 function gatherVars()
 
 % Recolhe as variáveis necessárias para o posterior cálculo.
+% Todas estas variáveis estão sob a classe data.
 % Chama a função que resolve a equação diferencial pelo
-% método de diferenças finitas.
+% método de diferenças finitas (calculate).
+% Não necessita de argumentos de entrada, e não retorna
+% nenhuma variável ao Main.
 % TO DO:
 % - Decidir se Enter significa sim ou não;
 
@@ -17,8 +20,7 @@ data.area       = getInput(message, data.state, 0);
 message         = ('Comprimento da barra (m):\n');
 data.comp       = getInput(message, data.state, 0);
 badInput = false;
-repeat = true;
-while repeat
+while true
 	clc
 	printf('  Qual a função que representa a carga axial distribuída?\n')
 	printf('1 - Polinómio (grau 6)\n')
@@ -30,16 +32,19 @@ while repeat
 		badInput = false;
 	end
 	f = input('==>  ', 's');
-	if f == '1' 
-		data.cargaAxial = getPolinomio();
+	if f == '1'
+		[data.cargaAxial, data.funcstr] = getPolinomio();
 		break
 	elseif f == '2'
+		data.funcstr    = ('sen(πx/L)');
 		data.cargaAxial = @(x,L) sin(pi*x/L);
 		break
 	elseif f == '3'
+		data.funcstr    = ('cos(πx/L)');
 		data.cargaAxial = @(x,L) cos(pi*x/L);
 		break
 	elseif f == '4'
+		data.funcstr    = ('exp(x/l)');
 		data.cargaAxial = @(x,L) exp(x/L);
 		break
 	else
