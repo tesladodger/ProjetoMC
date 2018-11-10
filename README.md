@@ -10,7 +10,6 @@
 
 <p><b>To do:</p></b>
 
-- mostrar a funçao em reviewData;
 - Todos os cálculos da função 1;
 - Função 2 (barras conhecidas);
 
