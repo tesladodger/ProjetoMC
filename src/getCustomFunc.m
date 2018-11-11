@@ -8,7 +8,9 @@ function [fun, str] = getCustomFunc();
 badInput = false;
 while true
 	clc
-	printf('Introduza a função da carga axial \n(Ex.: @(x) sin(x)\n')
+	printf('Introduza a função da carga axial \n
+	printf('Ex.: @(x) sin(x)\n')
+	printf('(também pode depender de L, mas esse caso não será testado)\n')
 	
 	if badInput
 		printError(0);
