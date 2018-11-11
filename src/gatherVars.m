@@ -9,16 +9,18 @@ function gatherVars(useCustomFunc)
 % TO DO:
 % - Decidir se Enter significa sim ou não;
 
+data.useCustomFunc = useCustomFunc;
+data.state         = 403;  % data.state não é acedido
+                           % até se obter a carga axial
+                           % (ver função drawState)
 
-data.state = 403;  % data.state não é acedido até se obter a carga axial
-% Ver função drawState
+message     = ('Módulo de Young do material (MPa):\n');
+data.ymodul = getInput(message, data.state, 0);
+message     = ('Área da secção reta (m^2):\n');
+data.area   = getInput(message, data.state, 0);
+message     = ('Comprimento da barra (m):\n');
+data.comp   = getInput(message, data.state, 0);
 
-message         = ('Módulo de Young do material (MPa):\n');
-data.ymodul     = getInput(message, data.state, 0);
-message         = ('Área da secção reta (m^2):\n');
-data.area       = getInput(message, data.state, 0);
-message         = ('Comprimento da barra (m):\n');
-data.comp       = getInput(message, data.state, 0);
 if useCustomFunc
 	[data.cargaAxial, data.funcstr] = getCustomFunc();
 else
@@ -99,8 +101,8 @@ if !data.isMola && !data.isForce
 end
 
 clc
-part1   = ('Número de pontos para o cálculo (maior ou igual a 3):\n');
-part2   = ('(O valor será arredondado ao inteiro ímpar mais próximo)\n');
+part1   = ('Número de pontos na para o cálculo (maior ou igual a 3):\n');
+part2   = ('(O valor será arredondado a um inteiro ímpar)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
 data.n  = uint32(n);
