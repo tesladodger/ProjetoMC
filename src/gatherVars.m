@@ -14,8 +14,8 @@ data.state         = 403;  % data.state não é acedido
                            % até se obter a carga axial
                            % (ver função drawState)
 
-message     = ('Módulo de Young do material (MPa):\n');
-data.ymodul = getInput(message, data.state, 0);
+message     = ('Módulo de Young do material (GPa):\n');
+data.ymodul = getInput(message, data.state, 0)*1000000000; % Pascal
 message     = ('Área da secção reta (m^2):\n');
 data.area   = getInput(message, data.state, 0);
 message     = ('Comprimento da barra (m):\n');
@@ -96,9 +96,8 @@ part2   = ('(O valor será arredondado a um inteiro ímpar)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
 data.n  = uint32(n);
-if (data.n < 3) data.n = 3; end
-if !(mod(data.n, 2)) % Se não for ímpar
-	data.n += 1;
+if data.n < 3
+	data.n = 3;
 end
 
 goToCalculations = reviewData(data);
