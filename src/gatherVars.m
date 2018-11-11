@@ -29,9 +29,9 @@ else
 		clc
 		printf('  Qual a função que representa a carga axial distribuída?\n')
 		printf('1 - Polinómio (grau 6)\n')
-		printf('2 - sen(πx) \n')
-		printf('3 - cos(πx) \n')
-		printf('4 - exp(x)  \n')
+		printf('2 - sen(πx/L) \n')
+		printf('3 - cos(πx/L) \n')
+		printf('4 - exp(x/L)  \n')
 		if badInput
 			printError(0);
 			badInput = false;
@@ -41,16 +41,16 @@ else
 			[data.cargaAxial, data.funcstr] = getPolinomio();
 			break
 		elseif f == '2'
-			data.funcstr    = ('sen(πx)');
-			data.cargaAxial = @(x) sin(pi*x);
+			data.funcstr    = ('sen(πx/L)');
+			data.cargaAxial = @(x,L) sin(pi*x/L);
 			break
 		elseif f == '3'
-			data.funcstr    = ('cos(πx)');
-			data.cargaAxial = @(x,L) cos(pi*x);
+			data.funcstr    = ('cos(πx/L)');
+			data.cargaAxial = @(x,L) cos(pi*x/L);
 			break
 		elseif f == '4'
-			data.funcstr    = ('exp(x)');
-			data.cargaAxial = @(x,L) exp(x);
+			data.funcstr    = ('exp(x/L)');
+			data.cargaAxial = @(x,L) exp(x/L);
 			break
 		else
 			badInput = true;
