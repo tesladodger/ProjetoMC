@@ -9,16 +9,18 @@ function gatherVars(useCustomFunc)
 % TO DO:
 % - Decidir se Enter significa sim ou não;
 
+data.useCustomFunc = useCustomFunc;
+data.state         = 403;  % data.state não é acedido
+                           % até se obter a carga axial
+                           % (ver função drawState)
 
-data.state = 403;  % data.state não é acedido até se obter a carga axial
-% Ver função drawState
+message     = ('Módulo de Young do material (MPa):\n');
+data.ymodul = getInput(message, data.state, 0);
+message     = ('Área da secção reta (m^2):\n');
+data.area   = getInput(message, data.state, 0);
+message     = ('Comprimento da barra (m):\n');
+data.comp   = getInput(message, data.state, 0);
 
-message         = ('Módulo de Young do material (MPa):\n');
-data.ymodul     = getInput(message, data.state, 0);
-message         = ('Área da secção reta (m^2):\n');
-data.area       = getInput(message, data.state, 0);
-message         = ('Comprimento da barra (m):\n');
-data.comp       = getInput(message, data.state, 0);
 if useCustomFunc
 	[data.cargaAxial, data.funcstr] = getCustomFunc();
 else
@@ -29,7 +31,7 @@ else
 		printf('1 - Polinómio (grau 6)\n')
 		printf('2 - sen(πx/L) \n')
 		printf('3 - cos(πx/L) \n')
-		printf('4 - exp(x/l)  \n')
+		printf('4 - exp(x/L)  \n')
 		if badInput
 			printError(0);
 			badInput = false;
@@ -84,23 +86,13 @@ if !data.isMola
 			data.state += 3;
 		end
 	else
-		data.isForce = false;  % Apenas necessário para condição seguinte
-	end
-end
-
-if !data.isMola && !data.isForce
-	clc
-	drawState(data.state);
-	d = input('Deseja encastrar a barra entre duas paredes? [Y/n] ', 's');
-	if d == 'y' || d == 'Y' || size(d) == 0
-		data.isWall = true;
-		data.state += 4;
+		data.isForce = false;
 	end
 end
 
 clc
-part1   = ('Número de pontos para o cálculo (maior ou igual a 3):\n');
-part2   = ('(O valor será arredondado ao inteiro ímpar mais próximo)\n');
+part1   = ('Número de pontos na para o cálculo (maior ou igual a 3):\n');
+part2   = ('(O valor será arredondado a um inteiro ímpar)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
 data.n  = uint32(n);
