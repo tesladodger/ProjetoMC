@@ -38,7 +38,7 @@ else
 		end
 		f = input('==>  ', 's');
 		if f == '1'
-			[data.cargaAxial, data.funcstr] = getPolinomio();
+			[data.cargaAxial, data.funcstr, data.coef] = getPolinomio();
 			break
 		elseif f == '2'
 			data.funcstr    = ('sen(πx/L)');

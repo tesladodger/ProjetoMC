@@ -1,6 +1,6 @@
-function [pol, funcstr] = getPolinomio()
+function [pol, funcstr, coef] = getPolinomio()
 
-% 
+% Função para criar um polinómio
 
 for i = 6 : -1 : 0
 	kmp       = num2str(i);

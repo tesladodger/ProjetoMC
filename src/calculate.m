@@ -88,11 +88,26 @@ elseif data.state >= 2
 	u = calcularDeslocamentoComForca;
 end
 
-if data.funcstr == 'sen(πx/L)'
+
+if strcmp(data.funcstr,('sen(πx/L)'))
 	if data.state == 0
 		data.deslAnalit = @(x,L,E,A) ( ( L.^2 * sin(pi*x/L) ) / ( pi.^2 * E * A ) );
-	elseif data.state <= 2
+	elseif data.state >= 2
 		data.deslAnalit = @(x,L,E,A) (  ( ( L.^2 * sin(pi*x/L) ) / ( pi.^2 * E * A ) ) + ( x * F / ( A * E ) )  );
+	end
+elseif !data.useCustomFunc
+	coef = data.coef;
+	for i = 7 : -1 : 1
+		if !(coef(i) == 0)
+			c(i) = coef(i)/(i*(i+1));
+		else
+			c(i) = 0;
+		end
+	end
+	data.deslAnalit = @(x,F,L,A,E) ( ( c(7)*x.^8 + c(6)*x.^7 + c(5)*x.^6 + c(4)*x.^5 + c(3)*x.^4 + c(2)*x.^3 + c(1)*x.^2 ) / ( -E * A ) );
+	if data.state >= 2
+		c1 = @(x,F,L,A,E) (( (F*L/(A*E)) + (data.deslAnalit(x,F,L,A,E)) )/L);
+		data.deslAnalit = @(x,F,L,A,E) ( data.deslAnalit(x,F,L,A,E) + c1(x,F,L,A,E)*x ); % Isto não é recursão!!
 	end
 end
 
