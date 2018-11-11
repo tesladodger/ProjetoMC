@@ -78,8 +78,8 @@ if !data.isMola
 	c = input('Existe um força aplicada na extremidade? [Y/n] ', 's');
 	if c == 'y' || c == 'Y' || size(c) == 0
 		data.isForce = true;
-		message    = ('Qual o valor da força (N)?\n');
-		data.force = getInput(message, data.state, 1);
+		message      = ('Qual o valor da força (N)?\n');
+		data.force   = getInput(message, data.state, 1);
 		if data.force >= 0
 			data.state += 2;
 		else
