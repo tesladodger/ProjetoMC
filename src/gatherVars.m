@@ -29,9 +29,9 @@ else
 		clc
 		printf('  Qual a função que representa a carga axial distribuída?\n')
 		printf('1 - Polinómio (grau 6)\n')
-		printf('2 - sen(πx/L) \n')
-		printf('3 - cos(πx/L) \n')
-		printf('4 - exp(x/L)  \n')
+		printf('2 - sen(πx) \n')
+		printf('3 - cos(πx) \n')
+		printf('4 - exp(x)  \n')
 		if badInput
 			printError(0);
 			badInput = false;
@@ -41,16 +41,16 @@ else
 			[data.cargaAxial, data.funcstr] = getPolinomio();
 			break
 		elseif f == '2'
-			data.funcstr    = ('sen(πx/L)');
-			data.cargaAxial = @(x,L) sin(pi*x/L);
+			data.funcstr    = ('sen(πx)');
+			data.cargaAxial = @(x) sin(pi*x);
 			break
 		elseif f == '3'
-			data.funcstr    = ('cos(πx/L)');
-			data.cargaAxial = @(x,L) cos(pi*x/L);
+			data.funcstr    = ('cos(πx)');
+			data.cargaAxial = @(x,L) cos(pi*x);
 			break
 		elseif f == '4'
-			data.funcstr    = ('exp(x/l)');
-			data.cargaAxial = @(x,L) exp(x/L);
+			data.funcstr    = ('exp(x)');
+			data.cargaAxial = @(x,L) exp(x);
 			break
 		else
 			badInput = true;
@@ -91,8 +91,8 @@ if !data.isMola
 end
 
 clc
-part1   = ('Número de pontos na para o cálculo (maior ou igual a 3):\n');
-part2   = ('(O valor será arredondado a um inteiro ímpar)\n');
+part1   = ('Número de pontos para o cálculo (maior ou igual a 3):\n');
+part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
 data.n  = uint32(n);
