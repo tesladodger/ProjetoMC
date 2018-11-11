@@ -7,7 +7,7 @@ function goToCalculations = reviewData(data)
 
 clc
 drawState(data.state);
-printf('Módulo de Young:       %d MPa \n', data.ymodul )
+printf('Módulo de Young:       %d GPa \n', data.ymodul/1000000000 )
 printf('Área da secção reta:   %d m²  \n', data.area   )
 printf('Comprimento da barra:  %d m   \n', data.comp   )
 if data.isMola
