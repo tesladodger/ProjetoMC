@@ -108,6 +108,12 @@ if data.option == 2
 		elseif data.state >= 2
 			data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
 		end
+	elseif strcmp(data.funcstr,'12x²+6')
+		if data.state == 0
+			data.deslAnalit = @(x,L,E,A,F) ( - ( (x.^4) + (3*x) - (x*(3+(L.^3))) ) / (E*A)  );
+		elseif data.state >= 2
+			data.deslAnalit = @(x,L,E,A,F) ( - (  (x.^4) + (3*x) - (F+(L.^3)+3)*x  ) / (E*A)  );
+		end
 	else  % Quando é um polinómio:
 		coef = data.coef;
 		for i = 7 : -1 : 1
