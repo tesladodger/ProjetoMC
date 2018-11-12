@@ -5,7 +5,7 @@ function calculate(data)
 % Posteriormente, são desenhados os gráficos desejados.
 
 
-function u = calcularDeslocamentoEntreParedes;
+function u = calcEntreParedes;
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -24,7 +24,7 @@ function u = calcularDeslocamentoEntreParedes;
 	end
 end
 
-function u = calcularDeslocamentoComForca;
+function u = calcComForca;
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -47,35 +47,40 @@ end
 
 
 % ___________________________________________________________
-n = double(data.n);
-h = data.comp / n;
+n = double(data.n) ;
+L = data.comp      ;
+h = L / n          ;
 f = data.cargaAxial;
-E = data.ymodul;
-L = data.comp;
-A = data.area;
+E = data.ymodul    ;
+A = data.area      ;
+
 
 
 printf('A criar a matriz dos coeficientes...\n')
 reverseStr  = '';
 matrix      = zeros(n,n);
 matrix(1,1) = 1;
-for i = 2 : 1 : n-1
-	matrix(i,i)   = -2;
-	matrix(i,i+1) =  1;
-	matrix(i,i-1) =  1;
-	
-	msg = sprintf('Processado: %d/%d', i+1, n);
-	printf([reverseStr, msg])
-	reverseStr = repmat(sprintf('\b'), 1, length(msg));
+if data.pontos == 3
+	for i = 2 : 1 : n-1
+		matrix(i,i)   = -2;
+		matrix(i,i+1) =  1;
+		matrix(i,i-1) =  1;
+
+		msg = sprintf('Processado: %d/%d', i+1, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	end
+	if data.state >= 2
+		F             = data.force;
+		matrix(n,n-1) = -1;
+		matrix(n,n)   =  1;
+	else
+		matrix(n,n) = 1;
+		F           = 0;
+	end
 end
-if data.state >= 2
-	F             = data.force;
-	matrix(n,n-1) = -1;
-	matrix(n,n)   =  1;
-else
-	matrix(n,n) = 1;
-	F           = 0;
-end
+disp(matrix)
+pause
 
 
 printf('\nA inverter a matrix...\n')
@@ -83,10 +88,10 @@ invMatrix = inv(matrix);
 
 
 printf('A calcular o deslocamento por diferenças finitas...\n')
-if data.state == 0
-	u = calcularDeslocamentoEntreParedes;
-elseif data.state >= 2
-	u = calcularDeslocamentoComForca;
+if data.state == 0 && data.pontos == 3
+	u = calcEntreParedes;
+elseif data.state >= 2 && data.pontos == 3
+	u = calcComForca;
 end
 
 
@@ -97,7 +102,13 @@ if strcmp(data.funcstr,('sen(πx/L)'))
 	elseif data.state >= 2
 		data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
 	end
-else
+elseif strcmp(data.funcstr,('exp(x)'))
+	if data.state == 0
+		data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
+	elseif data.state >= 2
+		data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
+	end
+else  % Quando é um polinómio:
 	coef = data.coef;
 	for i = 7 : -1 : 1
 		if !(coef(i) == 0)
@@ -105,13 +116,13 @@ else
 		else
 			c(i) = 0;
 		end
-	end
+	end   % Cuidado, esparguete:
 	iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
 	if data.state == 0
 		data.deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
 	elseif data.state >= 2
 		data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
-	end
+	end   % Fim da esparguete.
 end
 
 

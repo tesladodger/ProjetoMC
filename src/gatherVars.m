@@ -1,18 +1,18 @@
-function gatherVars(useCustomFunc)
+function gatherVars(option)
 
 % Recolhe as variáveis necessárias para o posterior cálculo.
 % Todas estas variáveis estão sob a classe data.
 % Chama a função que resolve a equação diferencial pelo
 % método de diferenças finitas (calculate).
-% Recebe do Main o boolean useCustomFunc.
+% Recebe do Main a opção escolhida.
 % Não retorna nenhuma variável ao Main.
 % TO DO:
 % - Decidir se Enter significa sim ou não;
 
-data.useCustomFunc = useCustomFunc;
-data.state         = 403;  % data.state não é acedido
-                           % até se obter a carga axial
-                           % (ver função drawState)
+data.option = option;
+data.state  = 403;  % data.state não é acedido
+                    % até se obter a carga axial
+                    % (ver função drawState)
 
 message     = ('Módulo de Young do material (GPa):\n');
 data.ymodul = getInput(message, data.state, 0);
@@ -21,9 +21,9 @@ data.area   = getInput(message, data.state, 0);
 message     = ('Comprimento da barra (m):\n');
 data.comp   = getInput(message, data.state, 0);
 
-if useCustomFunc
+if option == 1
 	[data.cargaAxial, data.funcstr] = getCustomFunc();
-else
+elseif option == 2
 	badInput = false;
 	while true
 		clc
@@ -49,7 +49,7 @@ else
 			data.cargaAxial = @(x,L) cos(pi*x/L);
 			break
 		elseif f == '4'
-			data.funcstr    = ('exp(x/L)');
+			data.funcstr    = ('exp(x)');
 			data.cargaAxial = @(x,L) exp(x);
 			break
 		else
@@ -65,7 +65,8 @@ drawState(data.state);
 a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	data.state += 1; 
-	data.isMola = true;
+	data.isMola  = true;
+	data.isForce = false;
 	message = ('Constante da mola:\n');
 	data.k = getInput(message, data.state, 0);
 else
@@ -91,7 +92,7 @@ if !data.isMola
 end
 
 clc
-part1   = ('Número de pontos para o cálculo (maior ou igual a 3):\n');
+part1   = ('Número de divisões para o cálculo (maior ou igual a 3):\n');
 part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
 message = strcat(part1, part2);
 n       = getInput(message, data.state, 0);
@@ -99,6 +100,29 @@ data.n  = uint32(n);
 if data.n < 3
 	data.n = 3;
 end
+
+
+badInput = false;
+while true
+	clc
+	drawState(data.state)
+	printf('Efectuar difenças finitas com 3 ou 5 pontos?\n')
+	if badInput
+		printError(0);
+		badInput = false;
+	end
+	p = input('==> ', 's');
+	if p == '3'
+		data.pontos = 3;
+		break;
+	elseif p == '5'
+		data.pontos = 5;
+		break;
+	else
+		badInput = true;
+	end
+end
+
 
 goToCalculations = reviewData(data);
 if goToCalculations
