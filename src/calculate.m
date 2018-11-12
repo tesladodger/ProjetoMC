@@ -79,8 +79,6 @@ if data.pontos == 3
 		F           = 0;
 	end
 end
-disp(matrix)
-pause
 
 
 printf('\nA inverter a matrix...\n')
@@ -93,53 +91,81 @@ if data.state == 0 && data.pontos == 3
 elseif data.state >= 2 && data.pontos == 3
 	u = calcComForca;
 end
+printf('\n')
 
 
-printf('\nA calcular analiticamente...\n')
-if strcmp(data.funcstr,('sen(πx/L)'))
-	if data.state == 0
-		data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
-	elseif data.state >= 2
-		data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
-	end
-elseif strcmp(data.funcstr,('exp(x)'))
-	if data.state == 0
-		data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
-	elseif data.state >= 2
-		data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
-	end
-else  % Quando é um polinómio:
-	coef = data.coef;
-	for i = 7 : -1 : 1
-		if !(coef(i) == 0)
-			c(i) = coef(i)/(i*(i+1));
-		else
-			c(i) = 0;
+if data.option == 2
+	printf('A calcular analiticamente...\n')
+	if strcmp(data.funcstr,('sen(πx/L)'))
+		if data.state == 0
+			data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
+		elseif data.state >= 2
+			data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
 		end
-	end   % Cuidado, esparguete:
-	iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
-	if data.state == 0
-		data.deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
-	elseif data.state >= 2
-		data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
-	end   % Fim da esparguete.
+	elseif strcmp(data.funcstr,('exp(x)'))
+		if data.state == 0
+			data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
+		elseif data.state >= 2
+			data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
+		end
+	else  % Quando é um polinómio:
+		coef = data.coef;
+		for i = 7 : -1 : 1
+			if !(coef(i) == 0)
+				c(i) = coef(i)/(i*(i+1));
+			else
+				c(i) = 0;
+			end
+		end   % Cuidado, esparguete:
+		iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
+		if data.state == 0
+			data.deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
+		elseif data.state >= 2
+			data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
+		end   % Fim da esparguete.
+	end
+end
+
+
+printf('A calcular o erro relativo...\n')
+for k = 1 : 1 : n
+	erro(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
 end
 
 
 printf('A criar o gráfico...\n')
 for k = 1 : 1 : n
 	X(k)  = u(1,k);
-	DF(k) = u(2,k);                          % Diferenças finitas
-	YA(k) = data.deslAnalit(u(1,k),L,E,A,F); % Analiticamente
+	DF(k) = u(2,k);  % Diferenças finitas
+end
+if data.option == 2
+	for k = 1 : 1 : n
+		YA(k) = data.deslAnalit(u(1,k),L,E,A,F);  % Analiticamente
+	end
 end
 figure
-scatter(X,DF,'*')
-hold on
-scatter(X,YA)
-title('Gráfico do deslocamento')
-xlabel('x (m)')
-ylabel('u(x) (nm)')
-legend('Diferenças finitas','Analiticamente')
+if data.option == 1
+	scatter(X,DF,'*')
+	title('Gráfico do deslocamento')
+	xlabel('x (m)')
+	ylabel('u(x) (nm)')
+elseif data.option == 2
+	subplot(2,1,1);
+	scatter(X,DF,'*')
+	hold on
+	scatter(X,YA)
+	legend('Diferenças finitas','Analiticamente')
+	title('Gráfico do deslocamento')
+	xlabel('x (m)')
+	ylabel('u(x) (nm)')
+
+	subplot(2,1,2)
+	scatter(X,erro)
+	title('Erro relativo')
+	xlabel('x (m)')
+	ylabel('erro')
+end
+
 
 printf('\nPressione qualquer tecla para continuar...')
 pause
