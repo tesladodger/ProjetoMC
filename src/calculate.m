@@ -124,12 +124,10 @@ if data.option == 2
 			data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
 		end   % Fim da esparguete.
 	end
-end
-
-
-printf('A calcular o erro relativo...\n')
-for k = 1 : 1 : n
-	erro(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
+	printf('A calcular o erro relativo...\n')
+	for k = 1 : 1 : n
+		erro(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
+	end
 end
 
 

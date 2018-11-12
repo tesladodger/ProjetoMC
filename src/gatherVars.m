@@ -90,6 +90,7 @@ if !data.isMola
 	end
 end
 
+
 clc
 part1   = ('Número de divisões para o cálculo (maior ou igual a 3):\n');
 part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
