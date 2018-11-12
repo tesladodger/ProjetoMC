@@ -4,7 +4,7 @@ function [pol, funcstr, coef] = getPolinomio()
 
 for i = 6 : -1 : 0
 	kmp       = num2str(i);
-	message   = strcat('Coefiente do monómio de ordem: %d \n', kmp);
+	message   = strcat('Coefiente do monómio de ordem %d \n', kmp);
 	coef(i+1) = getInput(message, 401, 1); % É por causa disto que
 end                                        % indices começam do zero!!!
 % É por causa disto que indices começam do zero!!!
