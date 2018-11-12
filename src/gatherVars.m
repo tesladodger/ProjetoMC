@@ -15,7 +15,7 @@ data.state         = 403;  % data.state não é acedido
                            % (ver função drawState)
 
 message     = ('Módulo de Young do material (GPa):\n');
-data.ymodul = getInput(message, data.state, 0)*1000000000; % Pascal
+data.ymodul = getInput(message, data.state, 0);
 message     = ('Área da secção reta (m^2):\n');
 data.area   = getInput(message, data.state, 0);
 message     = ('Comprimento da barra (m):\n');
@@ -28,10 +28,10 @@ else
 	while true
 		clc
 		printf('  Qual a função que representa a carga axial distribuída?\n')
-		printf('1 - Polinómio (grau 6)\n')
+		printf('1 - polinómio (grau 6)\n')
 		printf('2 - sen(πx/L) \n')
 		printf('3 - cos(πx/L) \n')
-		printf('4 - exp(x/L)  \n')
+		printf('4 - exp(x)  \n')
 		if badInput
 			printError(0);
 			badInput = false;
@@ -50,7 +50,7 @@ else
 			break
 		elseif f == '4'
 			data.funcstr    = ('exp(x/L)');
-			data.cargaAxial = @(x,L) exp(x/L);
+			data.cargaAxial = @(x,L) exp(x);
 			break
 		else
 			badInput = true;

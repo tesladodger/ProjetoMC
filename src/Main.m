@@ -26,8 +26,8 @@ badInput = false;
 while repeat
 	clc
 	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n\n')
-	printf('1 - Funções de carga axial conhecidas \n')
-	printf('2 - Cálculo para uma função genérica \n')
+	printf('1 - Cálculo para uma função genérica  \n')
+	printf('2 - Visualização do erro do programa  \n')
 	printf('0 - Terminar \n')
 	
 	if badInput
@@ -38,11 +38,11 @@ while repeat
 	a = input('==> ', 's');
 
 	if a == '1'
-		gatherVars(0);
+		gatherVars(1);
 	
 	elseif a == '2'
 		printf('Opção 2\n')
-		gatherVars(1);
+		gatherVars(0);
 	elseif a == '0' || a == 'q'
 		printf('A sair...\n')
 		repeat = false;

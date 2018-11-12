@@ -69,11 +69,12 @@ for i = 2 : 1 : n-1
 	reverseStr = repmat(sprintf('\b'), 1, length(msg));
 end
 if data.state >= 2
-	F = data.force;
+	F             = data.force;
 	matrix(n,n-1) = -1;
 	matrix(n,n)   =  1;
 else
 	matrix(n,n) = 1;
+	F           = 0;
 end
 
 
@@ -81,7 +82,7 @@ printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);
 
 
-printf('A calcular o deslocamento...\n')
+printf('A calcular o deslocamento por diferenças finitas...\n')
 if data.state == 0
 	u = calcularDeslocamentoEntreParedes;
 elseif data.state >= 2
@@ -89,13 +90,14 @@ elseif data.state >= 2
 end
 
 
+printf('\nA calcular analiticamente...\n')
 if strcmp(data.funcstr,('sen(πx/L)'))
 	if data.state == 0
-		data.deslAnalit = @(x,L,E,A) ( ( L.^2 * sin(pi*x/L) ) / ( pi.^2 * E * A ) );
+		data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
 	elseif data.state >= 2
-		data.deslAnalit = @(x,L,E,A) (  ( ( L.^2 * sin(pi*x/L) ) / ( pi.^2 * E * A ) ) + ( x * F / ( A * E ) )  );
+		data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
 	end
-elseif !data.useCustomFunc
+else
 	coef = data.coef;
 	for i = 7 : -1 : 1
 		if !(coef(i) == 0)
@@ -104,19 +106,20 @@ elseif !data.useCustomFunc
 			c(i) = 0;
 		end
 	end
-	data.deslAnalit = @(x,F,L,A,E) ( ( c(7)*x.^8 + c(6)*x.^7 + c(5)*x.^6 + c(4)*x.^5 + c(3)*x.^4 + c(2)*x.^3 + c(1)*x.^2 ) / ( -E * A ) );
-	if data.state >= 2
-		c1 = @(x,F,L,A,E) (( (F*L/(A*E)) + (data.deslAnalit(x,F,L,A,E)) )/L);
-		data.deslAnalit = @(x,F,L,A,E) ( data.deslAnalit(x,F,L,A,E) + c1(x,F,L,A,E)*x ); % Isto não é recursão!!
+	iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
+	if data.state == 0
+		data.deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
+	elseif data.state >= 2
+		data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
 	end
 end
 
 
-printf('\nA criar o gráfico...')
+printf('A criar o gráfico...\n')
 for k = 1 : 1 : n
 	X(k)  = u(1,k);
-	DF(k) = u(2,k);                        % Diferenças finitas
-	YA(k) = data.deslAnalit(u(1,k),L,E,A); % Analiticamente
+	DF(k) = u(2,k);                          % Diferenças finitas
+	YA(k) = data.deslAnalit(u(1,k),L,E,A,F); % Analiticamente
 end
 figure
 scatter(X,DF,'*')
@@ -124,10 +127,10 @@ hold on
 scatter(X,YA)
 title('Gráfico do deslocamento')
 xlabel('x (m)')
-ylabel('u(x) (m)')
+ylabel('u(x) (nm)')
 legend('Diferenças finitas','Analiticamente')
 
-
+printf('\nPressione qualquer tecla para continuar...')
 pause
 
 
