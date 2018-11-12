@@ -17,7 +17,7 @@
 
 
 
-clear
+clear;
 format long;
 repeat   = true;
 badInput = false;
