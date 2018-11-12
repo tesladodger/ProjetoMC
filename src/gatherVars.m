@@ -30,8 +30,7 @@ elseif option == 2
 		printf('  Qual a função que representa a carga axial distribuída?\n')
 		printf('1 - polinómio (grau 6)\n')
 		printf('2 - sen(πx/L) \n')
-		printf('3 - cos(πx/L) \n')
-		printf('4 - exp(x)  \n')
+		printf('3 - exp(x)  \n')
 		if badInput
 			printError(0);
 			badInput = false;
