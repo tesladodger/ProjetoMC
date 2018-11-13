@@ -24,6 +24,25 @@ function u = calcEntreParedes;
 	end
 end
 
+function u = calcComMola;
+	u = zeros(n,n);
+	ponto = 0;
+	for i = 1 : 1 : n
+		u(1,i) = ponto;
+
+		for j = 2 : 1 : n-1
+			x = h*(j-1); % É por isto que indices começam do zero!!!
+			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
+		end
+
+		msg = sprintf('Processado: %d/%d', i, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+
+		ponto += h;
+	end
+end
+
 function u = calcComForca;
 	u = zeros(2,n);
 	ponto = 0;
@@ -56,7 +75,7 @@ A = data.area      ;
 
 
 
-printf('A criar a matriz dos coeficientes...\n')
+printf('\nA criar a matriz dos coeficientes...\n')
 reverseStr  = '';
 matrix      = zeros(n,n);
 matrix(1,1) = 1;
@@ -72,11 +91,52 @@ if data.pontos == 3
 	end
 	if data.state >= 2
 		F             = data.force;
+		matrix(n,n-2) =  1;
+		matrix(n,n-1) = -4;
+		matrix(n,n)   =  3;
+	elseif data.state == 1
+		k = data.k;
 		matrix(n,n-1) = -1;
-		matrix(n,n)   =  1;
+		matrix(n,n)   = (1-((h*k)/(E*A)));
 	else
 		matrix(n,n) = 1;
 		F           = 0;
+		k           = 0;
+	end
+elseif data.pontos == 5
+	for i : 3 : 1 : n-2
+		matrix(i,i)   = 30;
+		matrix(i,i+1) = 10;
+		matrix(i,i+2) = -1;
+		matrix(i,i-1) = 16;
+		matrix(i,i-2) = -1;
+
+		msg = sprintf('Processado: %d/%d', i+2, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	end
+	matrix(n-1,n-4) = -1;
+	matrix(n-1,n-3) =  4;
+	matrix(n-1,n-2) =  6;
+	matrix(n-1,n-1) =-20;
+	matrix(n-1,n)   = 11;
+	if data.state >= 2
+		F = data.force;
+		matrix(n,n-4) =  6;
+		matrix(n,n-3) =-32;
+		matrix(n,n-2) = 72;
+		matrix(n,n-1) =-96;
+		matrix(n,n)   = 50;
+	elseif data.state == 1
+		k = data.k;
+		matrix(n,n-4) =  6;
+		matrix(n,n-3) =-32;
+		matrix(n,n-2) = 72;
+		matrix(n,n-1) =-96;
+		matrix(n,n)   = 50-((h*K)/(E*A));
+	else
+		
+		matrix(n,n)     =  1;
 	end
 end
 
@@ -88,6 +148,8 @@ invMatrix = inv(matrix);
 printf('A calcular o deslocamento por diferenças finitas...\n')
 if data.state == 0 && data.pontos == 3
 	u = calcEntreParedes;
+elseif data.state == 1 && data.pontos == 3
+	u = calcComMola;
 elseif data.state >= 2 && data.pontos == 3
 	u = calcComForca;
 end
@@ -99,6 +161,8 @@ if data.option == 2
 	if strcmp(data.funcstr,('sen(πx/L)'))
 		if data.state == 0
 			data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
+		elseif data.state == 1
+			data.deslAnalit = @(x,L,E,A,F) (    )
 		elseif data.state >= 2
 			data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
 		end
@@ -156,9 +220,10 @@ if data.option == 1
 elseif data.option == 2
 	subplot(2,1,1);
 	scatter(X,DF,'*')
+
 	hold on
 	scatter(X,YA)
-	legend('Diferenças finitas','Analiticamente')
+	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
@@ -168,6 +233,7 @@ elseif data.option == 2
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro')
+	hold off
 end
 
 

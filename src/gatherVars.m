@@ -112,16 +112,6 @@ if !data.isMola
 end
 
 if !(option == 3)
-	clc
-	part1   = ('Número de divisões para o cálculo (maior ou igual a 3):\n');
-	part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
-	message = strcat(part1, part2);
-	n       = getInput(message, data.state, 0);
-	data.n  = uint32(n);
-	if data.n < 3
-		data.n = 3;
-	end
-
 	badInput = false;
 	while true
 		clc
@@ -141,6 +131,18 @@ if !(option == 3)
 		else
 			badInput = true;
 		end
+	end
+
+	clc
+	part1   = ('Número de divisões para o cálculo (maior ou igual a %s):\n',p);
+	part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
+	message = strcat(part1, part2);
+	n       = getInput(message, data.state, 0);
+	data.n  = uint32(n);
+	if p == '5' && data.n <5
+		data.n = 5;
+	elseif data.n < 3
+		data.n = 3;
 	end
 end
 
