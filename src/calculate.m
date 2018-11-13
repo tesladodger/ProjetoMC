@@ -6,7 +6,7 @@ function calculate(data)
 % Cada estado tem duas funções, para 3 e 5 pontos, porque é muito mais
 % rápido do que condicionar as expressões dentro do loop.
 
-function u = calcEntreParedes3;
+function u = calcEntreParedes3();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -25,7 +25,7 @@ function u = calcEntreParedes3;
 	end
 end
 
-function u = calcEntreParedes5;
+function u = calcEntreParedes5();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -44,7 +44,7 @@ function u = calcEntreParedes5;
 	end
 end
 
-function u = calcComMola3;
+function u = calcComMola3();
 	u = zeros(n,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -63,7 +63,7 @@ function u = calcComMola3;
 	end
 end
 
-function u = calcComMola5;
+function u = calcComMola5();
 	u = zeros(n,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -82,7 +82,7 @@ function u = calcComMola5;
 	end
 end
 
-function u = calcComForca3;
+function u = calcComForca3();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -102,7 +102,7 @@ function u = calcComForca3;
 	end
 end
 
-function u = calcComForca5;
+function u = calcComForca5();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -122,7 +122,44 @@ function u = calcComForca5;
 	end
 end
 
-
+function deslAnalit = getFuncAnal();
+	if strcmp(data.funcstr,('sen(πx/L)'))
+		if data.state == 0
+			deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
+		%elseif data.state == 1
+			%deslAnalit = @(x,L,E,A,F) (    )
+		elseif data.state >= 2
+			deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
+		end
+	elseif strcmp(data.funcstr,('exp(x)'))
+		if data.state == 0
+			deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
+		elseif data.state >= 2
+			deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
+		end
+	elseif strcmp(data.funcstr,'12x²+6')
+		if data.state == 0
+			deslAnalit = @(x,L,E,A,F) ( - ( (x.^4) + (3*x) - (x*(3+(L.^3))) ) / (E*A)  );
+		elseif data.state >= 2
+			deslAnalit = @(x,L,E,A,F) ( - (  (x.^4) + (3*x) - (F+(L.^3)+3)*x  ) / (E*A)  );
+		end
+	else  % Quando é um polinómio:
+		coef = data.coef;
+		for i = 7 : -1 : 1
+			if !(coef(i) == 0)
+				c(i) = coef(i)/(i*(i+1));
+			else
+				c(i) = 0;
+			end
+		end   % Cuidado, esparguete:
+		iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
+		if data.state == 0
+			deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
+		elseif data.state >= 2
+			deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
+		end   % Fim da esparguete.
+	end
+end
 
 % __________________________________________________________________ %
 L = data.comp;
@@ -169,6 +206,35 @@ if data.option == 3
 
 		k += 1;
 	end
+	printf('\nA calcular analiticamente...\n')
+	deslAnalit = getFuncAnal();
+	printf('\nA calcular o erro relativo para 3 pontos...\n')
+	for i = 1 : 1 : length(u3)
+		for k = 2 : 1 : length(u3{i})-1
+			tempError(k-1) = ( u3{i}(2,k) - deslAnalit(u3{i}(1,k),L,E,A,F) )/deslAnalit(u3{i}(1,k),L,E,A,F);
+		end
+		errorX(i) = i * 5;
+		error3Y(i) = max(tempError);
+	end
+	printf('A calcular o erro relativo para 5 pontos\n')
+	for i = 1 : 1 : length(u5)
+		for k = 2 : 1 : length(u5{i})-1
+			tempError(k-1) = abs(( u5{i}(2,k) - deslAnalit(u5{i}(1,k),L,E,A,F) )/deslAnalit(u5{i}(1,k),L,E,A,F));
+		end
+		error5Y(i) = max(tempError);
+	end
+	figure
+	scatter(errorX,error3Y,'*')
+	title('Erro relativo')
+	xlabel('Número de pontos')
+	ylabel('erro relativo')
+	hold on
+	scatter(errorX,error5Y)
+	legend('3 pontos','5 pontos')
+	hold off
+
+	printf('\nPressione qualquer tecla para continuar...')
+	pause
 	return;
 end
 
@@ -200,46 +266,11 @@ printf('\n')
 
 if data.option == 2
 	printf('A calcular analiticamente...\n')
-	if strcmp(data.funcstr,('sen(πx/L)'))
-		if data.state == 0
-			data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
-		%elseif data.state == 1
-			%data.deslAnalit = @(x,L,E,A,F) (    )
-		elseif data.state >= 2
-			data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
-		end
-	elseif strcmp(data.funcstr,('exp(x)'))
-		if data.state == 0
-			data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
-		elseif data.state >= 2
-			data.deslAnalit = @(x,L,E,A,F) ( - ( exp(x) + (x/L)*(1-F*L-exp(L)) - 1 ) / (E*A) );
-		end
-	elseif strcmp(data.funcstr,'12x²+6')
-		if data.state == 0
-			data.deslAnalit = @(x,L,E,A,F) ( - ( (x.^4) + (3*x) - (x*(3+(L.^3))) ) / (E*A)  );
-		elseif data.state >= 2
-			data.deslAnalit = @(x,L,E,A,F) ( - (  (x.^4) + (3*x) - (F+(L.^3)+3)*x  ) / (E*A)  );
-		end
-	else  % Quando é um polinómio:
-		coef = data.coef;
-		for i = 7 : -1 : 1
-			if !(coef(i) == 0)
-				c(i) = coef(i)/(i*(i+1));
-			else
-				c(i) = 0;
-			end
-		end   % Cuidado, esparguete:
-		iif = @(x) ((c(7)*x.^8)+(c(6)*x.^7)+(c(5)*x.^6)+(c(4)*x.^5)+(c(3)*x.^4)+(c(2)*x.^3)+(c(1)*x.^2));
-		if data.state == 0
-			data.deslAnalit = @(x,L,E,A,F) (- ( (iif(x) - (iif(L)*x/L)) / (E*A) ) );
-		elseif data.state >= 2
-			data.deslAnalit = @(x,L,E,A,F) (- (( iif(x) - F*x - (iif(L)*x/L) )/(E*A)) );
-		end   % Fim da esparguete.
-	end
+	deslAnalit = getFuncAnal();
 	printf('A calcular o erro relativo...\n')
 	for k = 1 : 1 : n-1
 		erroX(k) = u(1,k);
-		erroY(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
+		erroY(k) = abs( ( u(2,k) - deslAnalit(u(1,k),L,E,A,F) ) / deslAnalit(u(1,k),L,E,A,F) );
 	end
 end
 
@@ -251,7 +282,7 @@ for k = 1 : 1 : n
 end
 if data.option == 2
 	for k = 1 : 1 : n
-		aY(k) = data.deslAnalit(u(1,k),L,E,A,F);  % Analiticamente
+		aY(k) = deslAnalit(u(1,k),L,E,A,F);  % Analiticamente
 	end
 end
 figure
