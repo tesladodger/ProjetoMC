@@ -15,14 +15,15 @@ data.state  = 403;  % data.state não é acedido
                     % (ver função drawState)
 
 if option == 3
+	clc
 	drawState(0);
-	printf('Módulo de Young: 200 GPa \n')
-	printf('Área da secção:  0.1 m²  \n')
-	printf('Comprimento:       1 m   \n')
+	printf('Módulo de Young:  200 GPa \n')
+	printf('Área da secção:  0.05 m²  \n')
+	printf('Comprimento:        1 m   \n')
 	a = input('Deseja prosseguir com estes parametros? [Y/n] ')
 	if a == 'y' || a == 'Y' || size(a) == 0
 		data.ymodul = 200;
-		data.area   = 0.1;
+		data.area   = 0.05;
 		data.comp   = 1;
 		skip        = true;
 	else
