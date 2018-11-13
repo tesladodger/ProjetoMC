@@ -3,8 +3,7 @@ function [pol, funcstr, coef] = getPolinomio()
 % Função para criar um polinómio
 
 for i = 6 : -1 : 0
-	kmp       = num2str(i);
-	message   = strcat('Coefiente do monómio de ordem %d \n', kmp);
+	message   = sprintf('Coefiente do monómio de ordem %d :\n', i);
 	coef(i+1) = getInput(message, 401, 1); % É por causa disto que
 end                                        % indices começam do zero!!!
 % É por causa disto que indices começam do zero!!!
