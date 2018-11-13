@@ -3,7 +3,8 @@ function calculate(data)
 % Esta função efectua os cálculos do deslocamento, por diferenças finitas
 % e, se a função não for genérica, calcula o valor real e o erro;
 % Posteriormente, são desenhados os gráficos desejados.
-
+% Cada estado tem duas funções, para 3 e 5 pontos, porque é muito mais
+% rápido do que condicionar as expressões dentro do loop.
 
 function u = calcEntreParedes3;
 	u = zeros(2,n);
@@ -121,89 +122,62 @@ function u = calcComForca5;
 	end
 end
 
-% ___________________________________________________________
-n = double(data.n) ;
-L = data.comp      ;
-h = L / (n - 1)    ;
+
+
+% __________________________________________________________________ %
+L = data.comp;
 f = data.cargaAxial;
-E = data.ymodul    ;
-A = data.area      ;
+E = data.ymodul;
+A = data.area;
+if data.state >= 2
+	F = data.force;
+elseif data.state == 1
+	k = data.k;
+else
+	F = 0;
+	k = 0;
+end
+reverseStr = '';
 
 
-
-printf('\nA criar a matriz dos coeficientes...\n')
-reverseStr  = '';
-matrix      = zeros(n,n);
-matrix(1,1) = 1;
-if data.pontos == 3
-	for i = 2 : 1 : n-1
-		matrix(i,i)   = -2;
-		matrix(i,i+1) =  1;
-		matrix(i,i-1) =  1;
-
-		msg = sprintf('Processado: %d/%d', i+1, n);
-		printf([reverseStr, msg])
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+if data.option == 3
+	k = 1;
+	for i = 5 : 5 : 150
+		clc
+		printf('A calcular com 3 pontos...\n')
+		printf('Calculado para %d/150\n',i)
+		data.n = n  = i;
+		h = L / (n - 1);
+		data.pontos = 3;
+		invMatrix   = createMatrix(data);
+		printf('A calcular o deslocamento\n')
+		u3{k} = calcEntreParedes3;
+		
+		k += 1;
 	end
-	if data.state >= 2
-		F             = data.force;
-		matrix(n,n-2) =  1;
-		matrix(n,n-1) = -4;
-		matrix(n,n)   =  3;
-	elseif data.state == 1
-		k = data.k;
-		matrix(n,n-1) = -1;
-		matrix(n,n)   = (1-((h*k)/(E*A)));
-	else
-		matrix(n,n) = 1;
-		F           = 0;
-		k           = 0;
-	end
-elseif data.pontos == 5
-	for i = 3 : 1 : n-2
-		matrix(i,i)   = 30;
-		matrix(i,i+1) = 16;
-		matrix(i,i+2) = -1;
-		matrix(i,i-1) = 16;
-		matrix(i,i-2) = -1;
+	k = 1;
+	for i = 5 : 5 : 150
+		clc
+		printf('A calcular com 5 pontos...\n')
+		printf('Calculado para %d/150\n',i)
+		data.n = n  = i;
+		h = L / (n - 1);
+		data.pontos = 5;
+		invMatrix   = createMatrix(data);
+		printf('A calcular o deslocamento...\n')
+		u5{k} = calcEntreParedes5;
 
-		msg = sprintf('Processado: %d/%d', i+2, n);
-		printf([reverseStr, msg])
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		k += 1;
 	end
-	matrix(2,1)     = 11;
-	matrix(2,2)     =-20;
-	matrix(2,3)     =  6;
-	matrix(2,4)     =  4;
-	matrix(2,5)     = -1;
-	matrix(n-1,n-4) = -1;
-	matrix(n-1,n-3) =  4;
-	matrix(n-1,n-2) =  6;
-	matrix(n-1,n-1) =-20;
-	matrix(n-1,n)   = 11;
-	if data.state >= 2
-		F = data.force;
-		matrix(n,n-4) =  6;
-		matrix(n,n-3) =-32;
-		matrix(n,n-2) = 72;
-		matrix(n,n-1) =-96;
-		matrix(n,n)   = 50;
-	elseif data.state == 1
-		k = data.k;
-		matrix(n,n-4) =  6;
-		matrix(n,n-3) =-32;
-		matrix(n,n-2) = 72;
-		matrix(n,n-1) =-96;
-		matrix(n,n)   = 50-((h*K)/(E*A));
-	elseif data.state == 0
-		matrix(n,n) = 1;
-		F           = 0;
-		k           = 0;
-	end
+	return;
 end
 
-printf('\nA inverter a matrix...\n')
-invMatrix = inv(matrix);
+
+n = double(data.n);
+h = L / (n - 1);
+
+
+invMatrix = createMatrix(data);
 
 
 printf('A calcular o deslocamento por diferenças finitas...\n')
@@ -263,44 +237,45 @@ if data.option == 2
 		end   % Fim da esparguete.
 	end
 	printf('A calcular o erro relativo...\n')
-	for k = 1 : 1 : n
-		erro(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
+	for k = 1 : 1 : n-1
+		erroX(k) = u(1,k);
+		erroY(k) = abs( ( u(2,k) - data.deslAnalit(u(1,k),L,E,A,F) ) / data.deslAnalit(u(1,k),L,E,A,F) );
 	end
 end
 
 
 printf('A criar o gráfico...\n')
 for k = 1 : 1 : n
-	X(k)  = u(1,k);
-	DF(k) = u(2,k);  % Diferenças finitas
+	X(k)   = u(1,k);
+	dfY(k) = u(2,k);  % Diferenças finitas
 end
 if data.option == 2
 	for k = 1 : 1 : n
-		YA(k) = data.deslAnalit(u(1,k),L,E,A,F);  % Analiticamente
+		aY(k) = data.deslAnalit(u(1,k),L,E,A,F);  % Analiticamente
 	end
 end
 figure
 if data.option == 1
-	scatter(X,DF,'*')
+	scatter(X,dfY,'*')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 elseif data.option == 2
 	subplot(2,1,1);
-	scatter(X,DF,'*')
+	scatter(X,dfY,'*')
 
 	hold on
-	scatter(X,YA)
+	scatter(X,aY)
 	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 
 	subplot(2,1,2)
-	scatter(X,erro)
+	scatter(erroX,erroY)
 	title('Erro relativo')
 	xlabel('x (m)')
-	ylabel('erro')
+	ylabel('erro relativo')
 	hold off
 end
 
