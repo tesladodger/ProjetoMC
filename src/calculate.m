@@ -5,7 +5,7 @@ function calculate(data)
 % Posteriormente, são desenhados os gráficos desejados.
 
 
-function u = calcEntreParedes;
+function u = calcEntreParedes3;
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -24,7 +24,26 @@ function u = calcEntreParedes;
 	end
 end
 
-function u = calcComMola;
+function u = calcEntreParedes5;
+	u = zeros(2,n);
+	ponto = 0;
+	for i = 1 : 1 : n
+		u(1,i) = ponto;
+
+		for j = 2 : 1 : n-1
+			x = h*(j-1); % É por isto que indices começam do zero!!!
+			u(2,i) += ( invMatrix(i,j) * ( -12*(h.^2) * f(x,L) / ( E * A ) ) );
+		end
+
+		msg = sprintf('Processado: %d/%d', i, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+
+		ponto += h;
+	end
+end
+
+function u = calcComMola3;
 	u = zeros(n,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -43,7 +62,26 @@ function u = calcComMola;
 	end
 end
 
-function u = calcComForca;
+function u = calcComMola5;
+	u = zeros(n,n);
+	ponto = 0;
+	for i = 1 : 1 : n
+		u(1,i) = ponto;
+
+		for j = 2 : 1 : n-1
+			x = h*(j-1); % É por isto que indices começam do zero!!!
+			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
+		end
+
+		msg = sprintf('Processado: %d/%d', i, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+
+		ponto += h;
+	end
+end
+
+function u = calcComForca3;
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -52,7 +90,6 @@ function u = calcComForca;
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
 			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
-
 		end
 		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
 
@@ -64,11 +101,30 @@ function u = calcComForca;
 	end
 end
 
+function u = calcComForca5;
+	u = zeros(2,n);
+	ponto = 0;
+	for i = 1 : 1 : n
+		u(1,i) = ponto;
+
+		for j = 2 : 1 : n-1
+			x = h*(j-1); % É por isto que indices começam do zero!!!
+			u(2,i) += ( invMatrix(i,j) * ( -12*(h.^2) * f(x,L) / ( E * A ) ) );
+		end
+		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
+
+		msg = sprintf('Processado: %d/%d', i, n);
+		printf([reverseStr, msg])
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	
+		ponto += h;
+	end
+end
 
 % ___________________________________________________________
 n = double(data.n) ;
 L = data.comp      ;
-h = L / n          ;
+h = L / (n - 1)    ;
 f = data.cargaAxial;
 E = data.ymodul    ;
 A = data.area      ;
@@ -104,9 +160,9 @@ if data.pontos == 3
 		k           = 0;
 	end
 elseif data.pontos == 5
-	for i : 3 : 1 : n-2
+	for i = 3 : 1 : n-2
 		matrix(i,i)   = 30;
-		matrix(i,i+1) = 10;
+		matrix(i,i+1) = 16;
 		matrix(i,i+2) = -1;
 		matrix(i,i-1) = 16;
 		matrix(i,i-2) = -1;
@@ -115,6 +171,11 @@ elseif data.pontos == 5
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
+	matrix(2,1)     = 11;
+	matrix(2,2)     =-20;
+	matrix(2,3)     =  6;
+	matrix(2,4)     =  4;
+	matrix(2,5)     = -1;
 	matrix(n-1,n-4) = -1;
 	matrix(n-1,n-3) =  4;
 	matrix(n-1,n-2) =  6;
@@ -134,12 +195,12 @@ elseif data.pontos == 5
 		matrix(n,n-2) = 72;
 		matrix(n,n-1) =-96;
 		matrix(n,n)   = 50-((h*K)/(E*A));
-	else
-		
-		matrix(n,n)     =  1;
+	elseif data.state == 0
+		matrix(n,n) = 1;
+		F           = 0;
+		k           = 0;
 	end
 end
-
 
 printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);
@@ -147,12 +208,19 @@ invMatrix = inv(matrix);
 
 printf('A calcular o deslocamento por diferenças finitas...\n')
 if data.state == 0 && data.pontos == 3
-	u = calcEntreParedes;
+	u = calcEntreParedes3;
 elseif data.state == 1 && data.pontos == 3
-	u = calcComMola;
+	u = calcComMola3;
 elseif data.state >= 2 && data.pontos == 3
-	u = calcComForca;
+	u = calcComForca3;
+elseif data.state == 0 && data.pontos == 5
+	u = calcEntreParedes5;
+elseif data.state == 1 && data.pontos == 5
+	u = calcComMola5;
+elseif data.state >= 2 && data.pontos == 5
+	u = calcComForca5;
 end
+
 printf('\n')
 
 
@@ -161,8 +229,8 @@ if data.option == 2
 	if strcmp(data.funcstr,('sen(πx/L)'))
 		if data.state == 0
 			data.deslAnalit = @(x,L,E,A,F) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
-		elseif data.state == 1
-			data.deslAnalit = @(x,L,E,A,F) (    )
+		%elseif data.state == 1
+			%data.deslAnalit = @(x,L,E,A,F) (    )
 		elseif data.state >= 2
 			data.deslAnalit = @(x,L,E,A,F) (  (((L/pi).^2) * sin(pi*x/L) / (E*A)) + (F*x/(E*A))  );
 		end

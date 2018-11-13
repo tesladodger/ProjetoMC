@@ -134,9 +134,9 @@ if !(option == 3)
 	end
 
 	clc
-	part1   = ('Número de divisões para o cálculo (maior ou igual a %s):\n',p);
+	part1   = sprintf('Número de divisões para o cálculo (maior ou igual a %s)\n',p);
 	part2   = ('(O valor será arredondado ao inteiro mais próximo)\n');
-	message = strcat(part1, part2);
+	message = strcat(part1,part2);
 	n       = getInput(message, data.state, 0);
 	data.n  = uint32(n);
 	if p == '5' && data.n <5
