@@ -11,10 +11,10 @@ printf('Módulo de Young:       %d GPa \n', data.ymodul  )
 printf('Área da secção reta:   %d m²  \n', data.area    )
 printf('Comprimento da barra:  %d m   \n', data.comp    )
 printf('Função da carga axial: %s     \n', data.funcstr )
-if data.isMola
+if data.state == 1
 	printf('Constante k:           %d \n', data.k )
 end
-if data.isForce
+if data.state >= 2
 	printf('Força F:               %d(N) \n', data.force )
 end
 if !(data.option == 3)

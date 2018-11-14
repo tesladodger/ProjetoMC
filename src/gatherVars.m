@@ -86,20 +86,13 @@ drawState(data.state);
 a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	data.state += 1; 
-	data.isMola  = true;
-	data.isForce = false;
 	message = ('Constante da mola:\n');
 	data.k = getInput(message, data.state, 0);
 else
-	data.isMola = false;
-end
-
-if !data.isMola
 	clc
 	drawState(data.state);
 	c = input('Existe um força aplicada na extremidade? [Y/n] ', 's');
 	if c == 'y' || c == 'Y' || size(c) == 0
-		data.isForce = true;
 		message      = ('Qual o valor da força (N)?\n');
 		data.force   = getInput(message, data.state, 1);
 		if data.force >= 0
@@ -107,10 +100,9 @@ if !data.isMola
 		else
 			data.state += 3;
 		end
-	else
-		data.isForce = false;
 	end
 end
+
 
 if !(option == 3)
 	badInput = false;
