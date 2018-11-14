@@ -28,9 +28,9 @@ while true
 	try
 		% A função pode ser válida e não ter significado lógico
 		% Deste modo, é testada com alguns valores:
-		y = fun(1);
-		y = fun(0);
-		y = fun(pi);
+		y = fun(1,2);
+		y = fun(0,2);
+		y = fun(pi,2);
 	catch error
 		badInput = true;
 		continue
