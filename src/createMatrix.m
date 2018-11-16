@@ -1,5 +1,10 @@
 function invMatrix = createMatrix(data)
 
+% Esta função gera a matriz dos coeficientes para o cálculo das diferenças
+% finitas, para 3 e 5 pontos. Recebe as variáveis presentes em data e devolve a
+% matriz já invertida. 
+
+
 
 n = double(data.n);
 L = data.comp;
@@ -78,7 +83,5 @@ elseif data.pontos == 5
 end
 
 
-
 printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);
-
