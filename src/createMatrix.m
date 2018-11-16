@@ -25,7 +25,7 @@ if data.pontos == 3
 		matrix(i,i)   = -2;
 		matrix(i,i+1) =  1;
 		matrix(i,i-1) =  1;
-		msg = sprintf('Processado: %d/%d', i+1, n);
+		msg = sprintf('%d/%d', i+1, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
@@ -46,7 +46,7 @@ elseif data.pontos == 5
 		matrix(i,i+2) = -1;
 		matrix(i,i-1) = 16;
 		matrix(i,i-2) = -1;
-		msg = sprintf('Processado: %d/%d', i+2, n);
+		msg = sprintf('%d/%d', i+2, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
