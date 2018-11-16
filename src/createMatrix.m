@@ -24,12 +24,12 @@ end
 printf('\nA criar a matriz dos coeficientes...\n')
 reverseStr  = '';
 matrix      = zeros(n,n);
-matrix(1,1) = 1;
 if data.pontos == 3
+	matrix(1,1) = 1;
 	for i = 2 : 1 : n-1
+		matrix(i,i-1) =  1;
 		matrix(i,i)   = -2;
 		matrix(i,i+1) =  1;
-		matrix(i,i-1) =  1;
 		msg = sprintf('%d/%d', i+1, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
@@ -45,26 +45,22 @@ if data.pontos == 3
 		matrix(n,n) = 1;
 	end
 elseif data.pontos == 5
+	matrix(1,1) = 1/12;
 	for i = 3 : 1 : n-2
-		matrix(i,i)   = 30;
-		matrix(i,i+1) = 16;
-		matrix(i,i+2) = -1;
-		matrix(i,i-1) = 16;
-		matrix(i,i-2) = -1;
+		matrix(i,i-2) = -1/12;
+		matrix(i,i-1) =   4/3;
+		matrix(i,i)   =  -5/2;
+		matrix(i,i+1) =   4/3;
+		matrix(i,i+2) = -1/12;
 		msg = sprintf('%d/%d', i+2, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
-	matrix(2,1)     =  11;
-	matrix(2,2)     = -20;
-	matrix(2,3)     =   6;
-	matrix(2,4)     =   4;
-	matrix(2,5)     =  -1;
-	matrix(n-1,n-4) =  -1;
-	matrix(n-1,n-3) =   4;
-	matrix(n-1,n-2) =   6;
-	matrix(n-1,n-1) = -20;
-	matrix(n-1,n)   =  11;
+	matrix(2,1) = matrix(n-1,n)   = 11/12;
+	matrix(2,2) = matrix(n-1,n-1) =  -5/3;
+	matrix(2,3) = matrix(n-1,n-2) =   1/2;
+	matrix(2,4) = matrix(n-1,n-3) =   1/3;
+	matrix(2,5) = matrix(n-1,n-4) = -1/12;
 	if data.state >= 2
 		matrix(n,n-4) =   6;
 		matrix(n,n-3) = -32;
@@ -78,7 +74,7 @@ elseif data.pontos == 5
 		matrix(n,n-1) = -96;
 		matrix(n,n)   =  50-((h*K)/(E*A));
 	elseif data.state == 0
-		matrix(n,n) = 1;
+		matrix(n,n) = 1/12;
 	end
 end
 
