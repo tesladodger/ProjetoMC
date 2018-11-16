@@ -12,11 +12,8 @@
 
 ## To do:
 
-1. Todos os cálculos
-   * Derivadas
-   * Diferenças finitas
-   * Erros
-2. Gráficos
+1. 5 pontos correto
+2. Molas
 
 
 ## Convenções:
