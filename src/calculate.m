@@ -1,10 +1,11 @@
 function calculate(data)
 
-% Esta função efectua os cálculos do deslocamento, por diferenças finitas
-% e, se a função não for genérica, calcula o valor real e o erro;
-% Posteriormente, são desenhados os gráficos desejados.
-% Cada estado tem duas funções, para 3 e 5 pontos, porque é muito mais
-% rápido do que condicionar as expressões dentro do loop.
+% Esta função efectua os cálculos do deslocamento, por diferenças finitas e, se
+% a função não for genérica, calcula o valor real e o erro; Posteriormente, são
+% desenhados os gráficos desejados.  Cada estado tem duas funções, para 3 e 5
+% pontos, porque é muito mais rápido do que condicionar as expressões dentro do
+% loop.
+
 
 function u = calcEntreParedes3();
 	u = zeros(2,n);
@@ -33,7 +34,7 @@ function u = calcEntreParedes5();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -12*(h.^2) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -12*(h*h) * f(x,L) / ( E * A ) ) );
 		end
 
 		msg = sprintf('Processado: %d/%d', i, n);
@@ -161,6 +162,8 @@ function deslAnalit = getFuncAnal();
 	end
 end
 
+
+
 % __________________________________________________________________ %
 L = data.comp;
 f = data.cargaAxial;
@@ -179,10 +182,10 @@ reverseStr = '';
 
 if data.option == 3
 	k = 1;
-	for i = 5 : 5 : 150
+	for i = 5 : 5 : 300
 		clc
 		printf('A calcular com 3 pontos...\n')
-		printf('Calculado para %d/150\n',i)
+		printf('%d/150\n',i)
 		data.n = n  = i;
 		h = L / (n - 1);
 		data.pontos = 3;
@@ -193,10 +196,10 @@ if data.option == 3
 		k += 1;
 	end
 	k = 1;
-	for i = 5 : 5 : 150
+	for i = 5 : 5 : 300
 		clc
 		printf('A calcular com 5 pontos...\n')
-		printf('Calculado para %d/150\n',i)
+		printf('%d/150\n',i)
 		data.n = n  = i;
 		h = L / (n - 1);
 		data.pontos = 5;
@@ -213,10 +216,10 @@ if data.option == 3
 		for k = 2 : 1 : length(u3{i})-1
 			tempError(k-1) = ( u3{i}(2,k) - deslAnalit(u3{i}(1,k),L,E,A,F) )/deslAnalit(u3{i}(1,k),L,E,A,F);
 		end
-		errorX(i) = i * 5;
+		errorX(i)  = L / ( i * 5 + 1 );
 		error3Y(i) = max(tempError);
 	end
-	printf('A calcular o erro relativo para 5 pontos\n')
+	printf('A calcular o erro relativo para 5 pontos...\n')
 	for i = 1 : 1 : length(u5)
 		for k = 2 : 1 : length(u5{i})-1
 			tempError(k-1) = abs(( u5{i}(2,k) - deslAnalit(u5{i}(1,k),L,E,A,F) )/deslAnalit(u5{i}(1,k),L,E,A,F));
@@ -224,12 +227,12 @@ if data.option == 3
 		error5Y(i) = max(tempError);
 	end
 	figure
-	scatter(errorX,error3Y,'*')
+	loglog(errorX,error3Y,'*')
 	title('Erro relativo')
 	xlabel('Número de pontos')
 	ylabel('erro relativo')
 	hold on
-	scatter(errorX,error5Y)
+	loglog(errorX,error5Y)
 	legend('3 pontos','5 pontos')
 	hold off
 
@@ -260,6 +263,7 @@ elseif data.state == 1 && data.pontos == 5
 elseif data.state >= 2 && data.pontos == 5
 	u = calcComForca5;
 end
+
 
 printf('\n')
 
