@@ -34,7 +34,7 @@ function u = calcEntreParedes5();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -12*(h*h) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -1*(h*h) * f(x,L) / ( E * A ) ) );
 		end
 
 		msg = sprintf('%d/%d', i, n);
@@ -111,7 +111,7 @@ function u = calcComForca5();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -12*(h.^2) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
 		end
 		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
 
@@ -292,25 +292,28 @@ end
 figure
 if data.option == 1
 	scatter(X,dfY,'*')
+	axis([0 L -inf inf])
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 elseif data.option == 2
-	subplot(2,1,1);
-	scatter(X,dfY,'*')
+	subp1 = subplot(2,1,1);
+	scatter(subp1,X,dfY,'*')
 
 	hold on
-	scatter(X,aY)
+	scatter(subp1,X,aY)
 	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 
-	subplot(2,1,2)
-	scatter(erroX,erroY)
+	subp2 = subplot(2,1,2);
+	scatter(subp2,erroX,erroY)
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro relativo')
+
+	axis([subp1 subp2],[0 L -inf inf])
 	hold off
 end
 
