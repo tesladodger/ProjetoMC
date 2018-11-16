@@ -18,7 +18,7 @@ function u = calcEntreParedes3();
 			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
 		end
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 
@@ -37,7 +37,7 @@ function u = calcEntreParedes5();
 			u(2,i) += ( invMatrix(i,j) * ( -12*(h*h) * f(x,L) / ( E * A ) ) );
 		end
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 
@@ -56,7 +56,7 @@ function u = calcComMola3();
 			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
 		end
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 
@@ -75,7 +75,7 @@ function u = calcComMola5();
 			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
 		end
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 
@@ -95,7 +95,7 @@ function u = calcComForca3();
 		end
 		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	
@@ -115,7 +115,7 @@ function u = calcComForca5();
 		end
 		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
 
-		msg = sprintf('Processado: %d/%d', i, n);
+		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	
