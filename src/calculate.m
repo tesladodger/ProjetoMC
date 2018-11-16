@@ -182,7 +182,7 @@ reverseStr = '';
 
 if data.option == 3
 	k = 1;
-	for i = 5 : 5 : 300
+	for i = 5 : 5 : 150
 		clc
 		printf('A calcular com 3 pontos...\n')
 		printf('%d/150\n',i)
@@ -196,7 +196,7 @@ if data.option == 3
 		k += 1;
 	end
 	k = 1;
-	for i = 5 : 5 : 300
+	for i = 5 : 5 : 150
 		clc
 		printf('A calcular com 5 pontos...\n')
 		printf('%d/150\n',i)
