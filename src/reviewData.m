@@ -1,9 +1,10 @@
 function goToCalculations = reviewData(data)
 
-% Mostra ao utilizador as variáveis introduzidas e dá
-% a opção de continuar ou recomeçar (regressar ao Main).
+% Mostra ao utilizador as variáveis introduzidas e dá a opção de continuar ou
+% recomeçar (regressar ao Main).
 % Argumentos de entrada: variáveis presentes em data;
 % Argumentos de saída: boolean -> goToCalculations;
+
 
 clc
 drawState(data.state);

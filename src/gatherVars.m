@@ -1,13 +1,11 @@
 function gatherVars(option)
 
-% Recolhe as variáveis necessárias para o posterior cálculo.
-% Todas estas variáveis estão sob a classe data.
-% Chama a função que resolve a equação diferencial pelo
-% método de diferenças finitas (calculate).
-% Recebe do Main a opção escolhida.
-% Não retorna nenhuma variável ao Main.
-% TO DO:
-% - Decidir se Enter significa sim ou não;
+% Recolhe as variáveis necessárias para o posterior cálculo.  Todas estas
+% variáveis estão sob a classe data.  Chama a função que resolve a equação
+% diferencial pelo método de diferenças finitas (calculate).  Recebe do Main
+% a opção escolhida.  Não retorna nenhuma variável ao Main.  
+% TO DO: - Decidir se
+% Enter significa sim ou não;
 
 data.option = option;
 data.state  = 403;  % data.state não é acedido

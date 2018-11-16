@@ -43,9 +43,10 @@ expression = '@.*?\)'
 % @  -> primeiro caracter a procurar;
 % .  -> iguala qualquer caracter;
 % *  -> quantificador: iguala 0 ou mais igualdades do token anterior;
-% ?  -> torna o quantificador preguiçoso, igualando o menor número
-%	    possível de caracteres;
+% ?  -> torna o quantificador preguiçoso, igualando o menor número possível de
+%       caracteres;
 % \) -> último caracter (tem de ser escapado);
-str = regexprep(str,expression,''); % substituir o resultado
-									% da regex por ''
-str = strtrim(str);                 % eliminar espaços iniciais
+
+str = regexprep(str,expression,'');  % substituir o resultado
+
+str = strtrim(str);  % eliminar espaços iniciais

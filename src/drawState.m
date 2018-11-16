@@ -1,11 +1,9 @@
 function drawState(state)
 
-% O estado (state) da barra só pode ser 1 de 4 possíveis
-% em cada momento, permitindo-nos desenhá-lo no terminal,
-% com o mínimo de variáveis. Isto ajuda o utilizador a 
-% perceber se está a introduzir corretamente as caracterís-
-% ticas do problema (uma imagem ASCII vale mais que 1000
-% caracteres).
+% O estado (state) da barra só pode ser 1 de 4 possíveis em cada momento,
+% permitindo-nos desenhá-lo no terminal, com o mínimo de variáveis. Isto ajuda
+% o utilizador a perceber se está a introduzir corretamente as caracterís-
+% ticas do problema (uma imagem ASCII vale mais que 1000 caracteres).
 % Nota: sim, ∫∫∫∫∫∫∫∫∫∫ é uma mola!
 
 

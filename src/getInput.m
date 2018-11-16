@@ -1,8 +1,7 @@
 function someVar = getInput(message, state, canBeNegative)
 
-% Todos os inputs numéricos são tratados por 
-% esta função. Aceita valores positivos e
-% negativos, conforme necessário.
+% Todos os inputs numéricos são tratados por esta função. Aceita valores
+% positivos e negativos, conforme necessário.
 % Argumentos de entrada: 
 % 	string  -> message       " mensagem a mostrar ao utilizador
 %	int     -> state         " ver drawState
