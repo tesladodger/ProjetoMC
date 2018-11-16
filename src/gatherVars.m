@@ -12,7 +12,7 @@ data.state  = 403;  % data.state não é acedido
                     % até se obter a carga axial
                     % (ver função drawState)
 
-if option == 3
+if true % option == 3
 	clc
 	drawState(0);
 	printf('Módulo de Young:  200 GPa \n')
