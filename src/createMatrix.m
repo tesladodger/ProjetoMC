@@ -34,11 +34,11 @@ if data.pontos == 3
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
-elseif data.state >= 2
+	if data.state >= 2
 		matrix(n,n-2) =  1;
 		matrix(n,n-1) = -4;
 		matrix(n,n)   =  3;
-	if data.state == 1
+	elseif data.state == 1
 		matrix(n,n-1) = -1;
 		matrix(n,n)   = (-((h*k)/(E*A)));
 	else

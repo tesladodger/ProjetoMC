@@ -293,7 +293,7 @@ end
 figure
 if data.option == 1
 	scatter(X,dfY,'*')
-	axis([0 L -inf inf])
+	xlim([0 L])
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
@@ -303,18 +303,18 @@ elseif data.option == 2
 
 	hold on
 	scatter(X,aY)
+	xlim([0 L])
 	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
-	axis([0 L -inf inf])
 
 	subplot(2,1,2);
+	xlim([0 L])
 	scatter(erroX,erroY)
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro relativo')
-	axis([0 L -inf inf])
 
 	hold off
 end
