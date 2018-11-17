@@ -12,7 +12,7 @@
 
 ## To do:
 
-1. 5 pontos correto
+1. Forças
 2. Molas
 
 
