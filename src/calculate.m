@@ -46,7 +46,7 @@ function u = calcEntreParedes5();
 end
 
 function u = calcComMola3();
-	u = zeros(n,n);
+	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
 		u(1,i) = ponto;
@@ -65,7 +65,7 @@ function u = calcComMola3();
 end
 
 function u = calcComMola5();
-	u = zeros(n,n);
+	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
 		u(1,i) = ponto;
@@ -307,14 +307,15 @@ elseif data.option == 2
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
+	axis([0 L -inf inf])
 
 	subplot(2,1,2);
 	scatter(erroX,erroY)
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro relativo')
-
 	axis([0 L -inf inf])
+
 	hold off
 end
 
