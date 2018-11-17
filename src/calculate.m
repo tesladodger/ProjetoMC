@@ -34,7 +34,7 @@ function u = calcEntreParedes5();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -1*(h*h) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
 		end
 
 		msg = sprintf('%d/%d', i, n);
@@ -164,7 +164,7 @@ end
 
 
 
-% __________________________________________________________________ %
+% __________________________________________________________________________ %
 L = data.comp;
 f = data.cargaAxial;
 E = data.ymodul;
@@ -182,7 +182,7 @@ reverseStr = '';
 
 if data.option == 3
 	k = 1;
-	for i = 5 : 5 : 150
+	for i = 5 : 5 : 145
 		clc
 		printf('A calcular com 3 pontos...\n')
 		printf('%d/150\n',i)
@@ -196,7 +196,7 @@ if data.option == 3
 		k += 1;
 	end
 	k = 1;
-	for i = 5 : 5 : 150
+	for i = 5 : 5 : 145
 		clc
 		printf('A calcular com 5 pontos...\n')
 		printf('%d/150\n',i)
@@ -216,23 +216,23 @@ if data.option == 3
 		for k = 2 : 1 : length(u3{i})-1
 			tempError(k-1) = ( u3{i}(2,k) - deslAnalit(u3{i}(1,k),L,E,A,F) )/deslAnalit(u3{i}(1,k),L,E,A,F);
 		end
-		errorX(i)  = L / ( i * 5 + 1 );
+		errorX(i)  = L / ( (i * 5) - 1 );
 		error3Y(i) = max(tempError);
 	end
 	printf('A calcular o erro relativo para 5 pontos...\n')
 	for i = 1 : 1 : length(u5)
 		for k = 2 : 1 : length(u5{i})-1
-			tempError(k-1) = abs(( u5{i}(2,k) - deslAnalit(u5{i}(1,k),L,E,A,F) )/deslAnalit(u5{i}(1,k),L,E,A,F));
+			tempError(k-1) = ( u5{i}(2,k) - deslAnalit(u5{i}(1,k),L,E,A,F) )/deslAnalit(u5{i}(1,k),L,E,A,F);
 		end
 		error5Y(i) = max(tempError);
 	end
 	figure
 	loglog(errorX,error3Y,'*')
 	title('Erro relativo')
-	xlabel('Número de pontos')
+	xlabel('espaçamento')
 	ylabel('erro relativo')
 	hold on
-	loglog(errorX,error5Y)
+	loglog(errorX,error5Y,'d')
 	legend('3 pontos','5 pontos')
 	hold off
 
@@ -297,23 +297,23 @@ if data.option == 1
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 elseif data.option == 2
-	subp1 = subplot(2,1,1);
-	scatter(subp1,X,dfY,'*')
+	subplot(2,1,1);
+	scatter(X,dfY,'*')
 
 	hold on
-	scatter(subp1,X,aY)
+	scatter(X,aY)
 	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
 	xlabel('x (m)')
 	ylabel('u(x) (nm)')
 
-	subp2 = subplot(2,1,2);
-	scatter(subp2,erroX,erroY)
+	subplot(2,1,2);
+	scatter(erroX,erroY)
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro relativo')
 
-	axis([subp1 subp2],[0 L -inf inf])
+	axis([0 L -inf inf])
 	hold off
 end
 
