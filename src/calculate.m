@@ -273,7 +273,7 @@ if data.option == 2
 	printf('A calcular analiticamente...\n')
 	deslAnalit = getFuncAnal();
 	printf('A calcular o erro relativo...\n')
-	for k = 1 : 1 : n-1
+	for k = 2 : 1 : n-1
 		erroX(k) = u(1,k);
 		erroY(k) = abs( ( u(2,k) - deslAnalit(u(1,k),L,E,A,F) ) / deslAnalit(u(1,k),L,E,A,F) );
 	end
@@ -310,8 +310,8 @@ elseif data.option == 2
 	ylabel('u(x) (nm)')
 
 	subplot(2,1,2);
-	xlim([0 L])
 	scatter(erroX,erroY)
+	xlim([0 L])
 	title('Erro relativo')
 	xlabel('x (m)')
 	ylabel('erro relativo')
