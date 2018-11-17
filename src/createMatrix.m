@@ -62,11 +62,11 @@ elseif data.pontos == 5
 	matrix(2,4) = matrix(n-1,n-3) =   1/3;
 	matrix(2,5) = matrix(n-1,n-4) = -1/12;
 	if data.state >= 2
-		matrix(n,n-4) =   6;
-		matrix(n,n-3) = -32;
-		matrix(n,n-2) =  72;
-		matrix(n,n-1) = -96;
-		matrix(n,n)   =  50;
+		matrix(n,n-4) =  1/2;
+		matrix(n,n-3) = -7/3;
+		matrix(n,n-2) =    6;
+		matrix(n,n-1) =   -8;
+		matrix(n,n)   =50/12;
 	elseif data.state == 1
 		matrix(n,n-4) =   6;
 		matrix(n,n-3) = -32;
@@ -77,7 +77,6 @@ elseif data.pontos == 5
 		matrix(n,n) = 1/12;
 	end
 end
-
 
 printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);
