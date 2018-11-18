@@ -128,7 +128,7 @@ if data.option == 3
 	elseif data.state >= 2
 		calcFunc = @() calcComForca();
 	end
-	top = 100;
+	top = 150;
 	k = 1;
 	for i = 5 : 5 : top
 		clc
@@ -159,20 +159,20 @@ if data.option == 3
 	end
 	printf('\nA calcular analiticamente...\n')
 	deslAnalit = getFuncAnal();
-	printf('\nA calcular o erro relativo para 3 pontos...\n')
+	printf('\nA calcular o erro relativo médio para 3 pontos...\n')
 	for i = 1 : 1 : length(u3)
 		for k = 2 : 1 : length(u3{i})-1
 			tempError(k-1) = ( u3{i}(2,k) - deslAnalit(u3{i}(1,k),L,E,A,F) )/deslAnalit(u3{i}(1,k),L,E,A,F);
 		end
 		errorX(i)  = L / ( (i * 5) - 1 );
-		error3Y(i) = max(tempError);
+		error3Y(i) = sum(abs(tempError))/(i*5);
 	end
-	printf('A calcular o erro relativo para 5 pontos...\n')
+	printf('A calcular o erro relativo médio para 5 pontos...\n')
 	for i = 1 : 1 : length(u5)
 		for k = 2 : 1 : length(u5{i})-1
 			tempError(k-1) = ( u5{i}(2,k) - deslAnalit(u5{i}(1,k),L,E,A,F) )/deslAnalit(u5{i}(1,k),L,E,A,F);
 		end
-		error5Y(i) = max(tempError);
+		error5Y(i) = sum(abs(tempError))/(i*5);
 	end
 	figure
 	subplot(2,1,1)
@@ -183,7 +183,7 @@ if data.option == 3
 
 	subplot(2,1,2)
 	loglog(errorX,error5Y,'*')
-	legend('Erro Relativo Para 5 Pontos')
+	title('Erro Relativo Para 5 Pontos')
 	xlabel('espaçamento')
 	ylabel('erro relativo')
 
