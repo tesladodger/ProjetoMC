@@ -17,12 +17,12 @@ if true % option == 3
 	drawState(0);
 	printf('Módulo de Young:  200 GPa \n')
 	printf('Área da secção:  0.05 m²  \n')
-	printf('Comprimento:        1 m   \n')
+	printf('Comprimento:        5 m   \n')
 	a = input('Deseja prosseguir com estes parametros? [Y/n] ');
 	if a == 'y' || a == 'Y' || size(a) == 0
 		data.ymodul = 200;
 		data.area   = 0.05;
-		data.comp   = 1;
+		data.comp   = 5;
 		skip        = true;
 	else
 		skip = false;

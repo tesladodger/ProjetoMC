@@ -79,6 +79,5 @@ elseif data.pontos == 5
 end
 
 
-
 printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);
