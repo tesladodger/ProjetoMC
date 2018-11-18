@@ -2,12 +2,10 @@ function calculate(data)
 
 % Esta função efectua os cálculos do deslocamento, por diferenças finitas e, se
 % a função não for genérica, calcula o valor real e o erro; Posteriormente, são
-% desenhados os gráficos desejados.  Cada estado tem duas funções, para 3 e 5
-% pontos, porque é muito mais rápido do que condicionar as expressões dentro do
-% loop.
+% desenhados os gráficos desejados.
 
 
-function u = calcEntreParedes3();
+function u = calcEntreParedes();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -26,26 +24,7 @@ function u = calcEntreParedes3();
 	end
 end
 
-function u = calcEntreParedes5();
-	u = zeros(2,n);
-	ponto = 0;
-	for i = 1 : 1 : n
-		u(1,i) = ponto;
-
-		for j = 2 : 1 : n-1
-			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
-		end
-
-		msg = sprintf('%d/%d', i, n);
-		printf([reverseStr, msg])
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-
-		ponto += h;
-	end
-end
-
-function u = calcComMola3();
+function u = calcComMola();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -64,46 +43,7 @@ function u = calcComMola3();
 	end
 end
 
-function u = calcComMola5();
-	u = zeros(2,n);
-	ponto = 0;
-	for i = 1 : 1 : n
-		u(1,i) = ponto;
-
-		for j = 2 : 1 : n-1
-			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
-		end
-
-		msg = sprintf('%d/%d', i, n);
-		printf([reverseStr, msg])
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-
-		ponto += h;
-	end
-end
-
-function u = calcComForca3();
-	u = zeros(2,n);
-	ponto = 0;
-	for i = 1 : 1 : n
-		u(1,i) = ponto;
-
-		for j = 2 : 1 : n-1
-			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
-		end
-		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
-
-		msg = sprintf('%d/%d', i, n);
-		printf([reverseStr, msg])
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-	
-		ponto += h;
-	end
-end
-
-function u = calcComForca5();
+function u = calcComForca();
 	u = zeros(2,n);
 	ponto = 0;
 	for i = 1 : 1 : n
@@ -164,7 +104,7 @@ end
 
 
 
-% __________________________________________________________________________ %
+% _________________________main_function____________________________________ %
 L = data.comp;
 f = data.cargaAxial;
 E = data.ymodul;
@@ -181,7 +121,14 @@ reverseStr = '';
 
 
 if data.option == 3
-	top = 200;
+	if data.state == 0
+		calcFunc = @() calcEntreParedes();
+	elseif data.state == 1
+		calcFunc = @() calcComMola();
+	elseif data.state >= 2
+		calcFunc = @() calcComForca();
+	end
+	top = 100;
 	k = 1;
 	for i = 5 : 5 : top
 		clc
@@ -192,7 +139,7 @@ if data.option == 3
 		data.pontos = 3;
 		invMatrix   = createMatrix(data);
 		printf('A calcular o deslocamento\n')
-		u3{k} = calcEntreParedes3;
+		u3{k} = calcFunc();
 		
 		k += 1;
 	end
@@ -206,7 +153,7 @@ if data.option == 3
 		data.pontos = 5;
 		invMatrix   = createMatrix(data);
 		printf('A calcular o deslocamento...\n')
-		u5{k} = calcEntreParedes5;
+		u5{k} = calcFunc();
 
 		k += 1;
 	end
@@ -228,14 +175,17 @@ if data.option == 3
 		error5Y(i) = max(tempError);
 	end
 	figure
+	subplot(2,1,1)
 	loglog(errorX,error3Y,'*')
-	title('Erro relativo')
+	title('Erro Relativo Para 3 Pontos')
 	xlabel('espaçamento')
 	ylabel('erro relativo')
-	hold on
-	loglog(errorX,error5Y,'d')
-	legend('3 pontos','5 pontos')
-	hold off
+
+	subplot(2,1,2)
+	loglog(errorX,error5Y,'*')
+	legend('Erro Relativo Para 5 Pontos')
+	xlabel('espaçamento')
+	ylabel('erro relativo')
 
 	printf('\nPressione qualquer tecla para continuar...')
 	pause
@@ -251,18 +201,12 @@ invMatrix = createMatrix(data);
 
 
 printf('A calcular o deslocamento por diferenças finitas...\n')
-if data.state == 0 && data.pontos == 3
-	u = calcEntreParedes3;
-elseif data.state == 1 && data.pontos == 3
-	u = calcComMola3;
-elseif data.state >= 2 && data.pontos == 3
-	u = calcComForca3;
-elseif data.state == 0 && data.pontos == 5
-	u = calcEntreParedes5;
-elseif data.state == 1 && data.pontos == 5
-	u = calcComMola5;
-elseif data.state >= 2 && data.pontos == 5
-	u = calcComForca5;
+if data.state == 0
+	u = calcEntreParedes();
+elseif data.state == 1
+	u = calcComMola();
+elseif data.state >= 2
+	u = calcComForca();
 end
 
 
@@ -274,8 +218,8 @@ if data.option == 2
 	deslAnalit = getFuncAnal();
 	printf('A calcular o erro relativo...\n')
 	for k = 2 : 1 : n-1
-		erroX(k) = u(1,k);
-		erroY(k) = abs( ( u(2,k) - deslAnalit(u(1,k),L,E,A,F) ) / deslAnalit(u(1,k),L,E,A,F) );
+		erroX(k-1) = u(1,k);
+		erroY(k-1) = abs( ( u(2,k) - deslAnalit(u(1,k),L,E,A,F) ) / deslAnalit(u(1,k),L,E,A,F) );
 	end
 end
 
