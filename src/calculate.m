@@ -53,8 +53,8 @@ function u = calcComForca();
 			x = h*(j-1); % É por isto que indices começam do zero!!!
 			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
 		end
-		u(2,i) += ( invMatrix(i,n) * ( h * F * L / ( A * E ) ) );
-
+		u(2,i) += ( invMatrix(i,n) * ( 2 * (-h) * F * L / ( A * E ) ) )
+		pause
 		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
