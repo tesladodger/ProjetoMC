@@ -77,9 +77,6 @@ elseif data.pontos == 5
 		matrix(n,n) = 1/12;
 	end
 end
-disp('')
-disp(matrix)
-pause
 
 printf('\nA inverter a matrix...\n')
 invMatrix = inv(matrix);

@@ -51,10 +51,9 @@ function u = calcComForca();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -1*(h.^2) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / ( E * A ) ) );
 		end
-		u(2,i) += ( invMatrix(i,n) * ( 2 * (-h) * F * L / ( A * E ) ) )
-		pause
+		u(2,i) += ( invMatrix(i,n) * ( 2 * h * F * L / ( A * E ) ) );
 		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
