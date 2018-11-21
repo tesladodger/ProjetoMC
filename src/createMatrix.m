@@ -22,8 +22,8 @@ end
 
 
 printf('\nA criar a matriz dos coeficientes...\n')
-reverseStr  = '';
-matrix      = zeros(n,n);
+reverseStr = '';
+matrix     = zeros(n,n);
 if data.pontos == 3
 	matrix(1,1) = 1;
 	for i = 2 : 1 : n-1
@@ -35,14 +35,14 @@ if data.pontos == 3
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	end
 	if data.state >= 2
-		matrix(n,n-2) =  1;
-		matrix(n,n-1) = -4;
-		matrix(n,n)   =  3;
-	elseif data.state == 1
-		matrix(n,n-1) = -1;
-		matrix(n,n)   = (-((h*k)/(E*A)));
+		matrix(n,n-2) = 1/2;
+		matrix(n,n-1) =  -2;
+		matrix(n,n)   = 3/2;
+	%elseif data.state == 1
+		%matrix(n,n-1) = -1;
+		%matrix(n,n)   = (-((h*k)/(E*A)));
 	else
-		matrix(n,n) = 1;
+	matrix(n,n) = 1;
 	end
 elseif data.pontos == 5
 	matrix(1,1) = 1/12;
