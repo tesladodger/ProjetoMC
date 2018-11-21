@@ -46,11 +46,11 @@ elseif option == 2 || option == 3
 	badInput = false;
 	while true
 		clc
-		printf('  Qual a função que representa a carga axial distribuída?\n')
+		printf('  Qual a função que representa a carga axial distribuída?\n\n')
 		printf('1 - polinómio (grau 6)\n')
 		printf('2 - sen(πx/L)         \n')
 		printf('3 - exp(x)            \n')
-		printf('4 - 2x²+6             \n')
+		printf('4 - 2x²+6             \n\n')
 		if badInput
 			printError(0);
 			badInput = false;
@@ -85,7 +85,7 @@ a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	data.state += 1; 
 	message = ('Constante da mola:\n');
-	data.k = getInput(message, data.state, 0);
+	data.k = getInput(message, data.state, 1); % MUDA PARA 0!!!
 else
 	clc
 	drawState(data.state);
