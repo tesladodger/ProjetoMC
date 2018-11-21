@@ -38,14 +38,15 @@ if data.pontos == 3
 		matrix(n,n-2) = 1/2;
 		matrix(n,n-1) =  -2;
 		matrix(n,n)   = 3/2;
-	%elseif data.state == 1
-		%matrix(n,n-1) = -1;
-		%matrix(n,n)   = (-((h*k)/(E*A)));
-	else
+	elseif data.state == 1
+		matrix(n,n-2) = 1/2;
+		matrix(n,n-1) =  -2;
+		matrix(n,n)   = 3/2 + h*k/(E*A);
+	elseif data.state == 0
 	matrix(n,n) = 1;
 	end
 elseif data.pontos == 5
-	matrix(1,1) = 1/12;
+	matrix(1,1) = 1;
 	for i = 3 : 1 : n-2
 		matrix(i,i-2) = -1/12;
 		matrix(i,i-1) =   4/3;
@@ -68,11 +69,11 @@ elseif data.pontos == 5
 		matrix(n,n-1) =   -4;
 		matrix(n,n)   = 25/12;
 	elseif data.state == 1
-		matrix(n,n-4) =   1/4;
+		matrix(n,n-4) =  1/4;
 		matrix(n,n-3) = -4/3;
-		matrix(n,n-2) =  3;
-		matrix(n,n-1) = -4;
-		matrix(n,n)   =  50-((h*K)/(E*A));
+		matrix(n,n-2) =    3;
+		matrix(n,n-1) =   -4;
+		matrix(n,n)   =  (25/12)-((h*K)/(E*A));
 	elseif data.state == 0
 		matrix(n,n) = 1/12;
 	end
