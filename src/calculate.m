@@ -23,6 +23,7 @@ function u = calcEntreParedes();
 		ponto += h;
 	end
 end
+
 function u = calcComMola();
 	u = zeros(2,n);
 	ponto = 0;
@@ -32,6 +33,7 @@ function u = calcComMola();
 			x = h*(j-1); % É por isto que indices começam do zero!!!
 			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
 		end
+
 		uTemp = u(2,i);
 		u(2,i) += ( invMatrix(i,n) * ( -h*k*uTemp/(E*A) ) );
 
@@ -42,6 +44,7 @@ function u = calcComMola();
 		ponto += h;
 	end
 end
+
 function u = calcComForca();
 	u = zeros(2,n);
 	ponto = 0;
@@ -75,6 +78,9 @@ function deslAnalit = getFuncAnal();
 	elseif strcmp(data.funcstr,('exp(x)'))
 		if data.state == 0
 			deslAnalit = @(x,L,E,A,F,k) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
+		elseif data.state == 1
+			deltaX = ( (exp(L)*(L-1)) + 1 ) / (E*A);
+			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
 		end
@@ -131,15 +137,11 @@ reverseStr = '';
 
 
 if data.option == 3
-	if data.state == 0
-		calcFunc = @() calcEntreParedes();
-	elseif data.state == 1
-		calcFunc = @() calcComMola();
-	elseif data.state >= 2
-		calcFunc = @() calcComForca();
+	if     (data.state == 0) calcFunc = @() calcEntreParedes();
+	elseif (data.state == 1) calcFunc = @() calcComMola();
+	elseif (data.state >= 2) calcFunc = @() calcComForca();
 	end
 	top = 150;
-	j = 1;
 	for i = 5 : 5 : top
 		clc
 		printf('A calcular com 3 pontos...\n')
@@ -149,11 +151,8 @@ if data.option == 3
 		data.pontos = 3;
 		invMatrix   = createMatrix(data);
 		printf('A calcular o deslocamento\n')
-		u3{j} = calcFunc();
-		
-		j += 1;
+		u3{i/5} = calcFunc();
 	end
-	j = 1;
 	for i = 5 : 5 : top
 		clc
 		printf('A calcular com 5 pontos...\n')
@@ -163,9 +162,7 @@ if data.option == 3
 		data.pontos = 5;
 		invMatrix   = createMatrix(data);
 		printf('A calcular o deslocamento...\n')
-		u5{j} = calcFunc();
-
-		j += 1;
+		u5{i/5} = calcFunc();
 	end
 	printf('\nA calcular analiticamente...\n')
 	deslAnalit = getFuncAnal();
