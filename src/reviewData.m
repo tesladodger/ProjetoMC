@@ -18,6 +18,7 @@ end
 if data.state >= 2
 	printf('Força F:               %d N \n', data.force )
 end
+printf('Função da carga axial: %s     \n', data.funcstr )
 if !(data.option == 3)
 	printf('Divisões para cálculo: %d \n', data.n )
 	printf('Número de pontos (df): %d \n', data.pontos )
