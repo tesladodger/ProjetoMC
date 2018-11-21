@@ -13,10 +13,10 @@ printf('Área da secção reta:   %d m²  \n', data.area    )
 printf('Comprimento da barra:  %d m   \n', data.comp    )
 printf('Função da carga axial: %s     \n', data.funcstr )
 if data.state == 1
-	printf('Constante k:           %d \n', data.k )
+	printf('Constante k:           %d N/m \n', data.k )
 end
 if data.state >= 2
-	printf('Força F:               %d(N) \n', data.force )
+	printf('Força F:               %d N \n', data.force )
 end
 if !(data.option == 3)
 	printf('Divisões para cálculo: %d \n', data.n )
