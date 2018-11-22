@@ -73,7 +73,7 @@ elseif data.pontos == 5
 		matrix(n,n-3) = -4/3;
 		matrix(n,n-2) =    3;
 		matrix(n,n-1) =   -4;
-		matrix(n,n)   =  (25/12)-((h*K)/(E*A));
+		matrix(n,n)   =  (25/12)-((h*k)/(E*A));
 	elseif data.state == 0
 		matrix(n,n) = 1/12;
 	end
