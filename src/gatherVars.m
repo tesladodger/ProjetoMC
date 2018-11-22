@@ -18,7 +18,7 @@ if true % option == 3
 	printf('Módulo de Young:  200 GPa \n')
 	printf('Área da secção:  0.05 m²  \n')
 	printf('Comprimento:        5 m   \n')
-	a = input('Deseja prosseguir com estes parametros? [Y/n] ');
+	a = input('Deseja prosseguir com estes parametros? [Y/n] ', 's');
 	if a == 'y' || a == 'Y' || size(a) == 0
 		data.ymodul = 200;
 		data.area   = 0.05;
