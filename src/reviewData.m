@@ -15,7 +15,7 @@ printf('Função da carga axial: %s     \n', data.funcstr )
 if data.state == 1
 	printf('Constante k:           %d N/m \n', data.k )
 end
-if data.state >= 2
+if data.state == 2 || data.state == 3
 	printf('Força F:               %d N \n', data.force )
 end
 printf('Função da carga axial: %s     \n', data.funcstr )

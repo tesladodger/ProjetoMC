@@ -93,10 +93,9 @@ else
 	if c == 'y' || c == 'Y' || size(c) == 0
 		message      = ('Qual o valor da força (N)?\n');
 		data.force   = getInput(message, data.state, 1);
-		if data.force >= 0
-			data.state += 2;
-		else
-			data.state += 3;
+		if     (data.force > 0)  data.state += 2;
+		elseif (data.force < 0)  data.state += 3;
+		else                     data.state += 4;
 		end
 	end
 end
