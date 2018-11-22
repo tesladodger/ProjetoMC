@@ -31,12 +31,13 @@ function u = calcComMola();
 	ponto = 0;
 	for i = 1 : 1 : n
 		u(1,i) = ponto;
+
 		for j = 2 : 1 : n-1
-			x = h*(j-1); % É por isto que indices começam do zero!!!
+			x = h*(j-1);
 			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
 		end
 
-		uTemp = u(2,i);
+		uTemp = u(2,i) * (10.^(-9)); % metros
 		u(2,i) += ( invMatrix(i,n) * ( -h*k*uTemp/(E*A) ) );
 
 		msg = sprintf('%d/%d', i, n);
@@ -54,8 +55,8 @@ function u = calcComForca();
 		u(1,i) = ponto;
 
 		for j = 2 : 1 : n-1
-			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / ( E * A ) ) );
+			x = h*(j-1);
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
 		end
 
 		u(2,i) += ( invMatrix(i,n) * (  h * F / ( E * A ) ) );
@@ -81,8 +82,8 @@ function deslAnalit = getFuncAnal();
 		if data.state == 0
 			deslAnalit = @(x,L,E,A,F,k) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
 		elseif data.state == 1
-			deltaX = ( (exp(L)*(L-1)) + 1 ) / (E*A);
-			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
+			deltaX = ( ( (exp(L)*(L-1)) + 1 ) / (E*A) ) * (10.^(-9)) % Passar deltaX para metros
+			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
 		end
