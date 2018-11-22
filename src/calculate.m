@@ -37,7 +37,7 @@ function u = calcComMola();
 			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
 		end
 
-		uTemp = u(2,i) * (10.^(-9)); % metros
+		uTemp = u(2,i);
 		u(2,i) += ( invMatrix(i,n) * ( -h*k*uTemp/(E*A) ) );
 
 		msg = sprintf('%d/%d', i, n);
@@ -82,7 +82,10 @@ function deslAnalit = getFuncAnal();
 		if data.state == 0
 			deslAnalit = @(x,L,E,A,F,k) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
 		elseif data.state == 1
-			deltaX = ( ( (exp(L)*(L-1)) + 1 ) / (E*A) ) * (10.^(-9)) % Passar deltaX para metros
+			deltaX = ( ( (exp(L)*(L-1)) + 1 ) / (E*A) )
+			disp('')
+			disp(deltaX*k)
+			pause
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
@@ -237,11 +240,11 @@ end
 printf('A criar o gráfico...\n')
 for i = 1 : 1 : n
 	X(i)   = u(1,i);
-	dfY(i) = u(2,i);  % Diferenças finitas
+	dfY(i) = u(2,i) * (10.^9);  % Diferenças finitas
 end
 if data.option == 2
 	for i = 1 : 1 : n
-		aY(i) = deslAnalit(u(1,i),L,E,A,F,k);  % Analiticamente
+		aY(i) = deslAnalit(u(1,i),L,E,A,F,k) * (10.^9);  % Analiticamente
 	end
 end
 figure

@@ -20,7 +20,7 @@ if true % option == 3
 	printf('Comprimento:        5 m   \n')
 	a = input('Deseja prosseguir com estes parametros? [Y/n] ', 's');
 	if a == 'y' || a == 'Y' || size(a) == 0
-		data.ymodul = 200;
+		data.ymodul = 200 * (10.^9);
 		data.area   = 0.05;
 		data.comp   = 5;
 		skip        = true;
@@ -33,7 +33,7 @@ end
 
 if !skip
 	message     = ('Módulo de Young do material (GPa):\n');
-	data.ymodul = getInput(message, data.state, 0);
+	data.ymodul = getInput(message, data.state, 0) * (10.^9);
 	message     = ('Área da secção reta (m^2):\n');
 	data.area   = getInput(message, data.state, 0);
 	message     = ('Comprimento da barra (m): \n');
@@ -84,7 +84,7 @@ drawState(data.state);
 a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
 	data.state += 1; 
-	message = ('Constante da mola:\n');
+	message = ('Constante da mola (N/m):\n');
 	data.k = getInput(message, data.state, 1); % MUDA PARA 0!!!
 else
 	clc
