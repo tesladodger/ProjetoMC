@@ -1,10 +1,10 @@
 function calculate(data)
 
 % Esta função efectua os cálculos do deslocamento, por diferenças finitas e, se
-% a função não for genérica, calcula o valor real e o erro; Posteriormente, são
-% desenhados os gráficos desejados.
+% a função não for genérica, calcula o valor real e o erro. Posteriormente, são
+% desenhados os gráficos do deslocamento e erro.
 % Há três funções para o cálculo das dif. fin. porque é consideravelmente mais
-% rápido do que condiconar internamente apenas uma função.
+% rápido do que condicionar internamente apenas uma função.
 
 
 function u = calcEntreParedes();
