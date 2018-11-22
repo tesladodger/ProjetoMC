@@ -3,6 +3,8 @@ function calculate(data)
 % Esta função efectua os cálculos do deslocamento, por diferenças finitas e, se
 % a função não for genérica, calcula o valor real e o erro; Posteriormente, são
 % desenhados os gráficos desejados.
+% Há três funções para o cálculo das dif. fin. porque é consideravelmente mais
+% rápido do que condiconar internamente apenas uma função.
 
 
 function u = calcEntreParedes();
@@ -31,7 +33,7 @@ function u = calcComMola();
 		u(1,i) = ponto;
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( (-h * f(x,L)) / (E*A) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
 		end
 
 		uTemp = u(2,i);
