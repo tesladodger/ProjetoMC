@@ -118,7 +118,7 @@ function deslAnalit = getFuncAnal();
 			if !(coef(i) == 0)
 				cc(i) = coef(i)/(i*(i+1));
 			else
-				c(i) = 0;
+				cc(i) = 0;
 			end
 		end
 		i2f = @(x) ((cc(7)*x.^8)+(cc(6)*x.^7)+(cc(5)*x.^6)+(cc(4)*x.^5)+(cc(3)*x.^4)+(cc(2)*x.^3)+(cc(1)*x.^2));
