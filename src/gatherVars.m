@@ -61,15 +61,16 @@ elseif option == 2 || option == 3
 			break;
 		elseif f == '2'
 			data.funcstr    = ('sen(πx/L)');
-			data.cargaAxial = @(x,L) sin(pi*x/L);
+			L = data.comp;
+			data.cargaAxial = @(x) sin(pi*x/L);
 			break;
 		elseif f == '3'
 			data.funcstr    = ('exp(x)');
-			data.cargaAxial = @(x,L) exp(x);
+			data.cargaAxial = @(x) exp(x);
 			break;
 		elseif f == '4'
 			data.funcstr    = ('12x²+6');
-			data.cargaAxial = @(x,L) (12*x.^2)+6;
+			data.cargaAxial = @(x) (12*x.^2)+6;
 			break;
 		else
 			badInput = true;

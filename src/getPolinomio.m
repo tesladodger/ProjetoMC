@@ -1,6 +1,6 @@
 function [pol, funcstr, coef] = getPolinomio()
 
-% Função para criar um polinómio
+% Função para criar um polinómio de grau máximo 6
 
 
 function getFunky()
@@ -33,7 +33,7 @@ function getFunky()
 	end
 
 	% É por causa disto que indices começam do zero!!!
-	pol = @(x,L) ( coef(7)*x^6 + coef(6)*x^5 + coef(5)*x^4 + coef(4)*x^3 + coef(3)*x^2 + coef(2)*x + coef(1) );
+	pol = @(x) ( coef(7)*x^6 + coef(6)*x^5 + coef(5)*x^4 + coef(4)*x^3 + coef(3)*x^2 + coef(2)*x + coef(1) );
 	% É por causa disto que indices começam do zero!!!
 end
 

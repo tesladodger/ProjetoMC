@@ -9,8 +9,7 @@ badInput = false;
 while true
 	clc
 	printf('Introduza a função da carga axial \n')
-	printf('Ex.: @(x) sin(x)\n')
-	printf('(também pode depender de L, mas esse caso não será testado)\n')
+	printf('Ex.: @(x) sin(pi*x/L)\n')
 	
 	if badInput
 		printError(0);
@@ -28,9 +27,9 @@ while true
 	try
 		% A função pode ser válida e não ter significado lógico
 		% Deste modo, é testada com alguns valores:
-		y = fun(1,2);
-		y = fun(0,2);
-		y = fun(pi,2);
+		y = fun(1);
+		y = fun(0);
+		y = fun(pi);
 	catch error
 		badInput = true;
 		continue

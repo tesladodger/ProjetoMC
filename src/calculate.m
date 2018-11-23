@@ -15,7 +15,7 @@ function u = calcEntreParedes();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1); % É por isto que indices começam do zero!!!
-			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / ( E * A ) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x) / ( E * A ) ) );
 		end
 
 		msg = sprintf('%d/%d', i, n);
@@ -34,7 +34,7 @@ function u = calcComMola();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1);
-			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x) / (E*A) ) );
 		end
 
 		uTemp = u(2,i);
@@ -56,7 +56,7 @@ function u = calcComForca();
 
 		for j = 2 : 1 : n-1
 			x = h*(j-1);
-			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x,L) / (E*A) ) );
+			u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x) / (E*A) ) );
 		end
 
 		u(2,i) += ( invMatrix(i,n) * (  h * F / ( E * A ) ) );
@@ -71,37 +71,38 @@ end
 
 function deltaX = iterGetDeltaX(deslAnalit);
 	% Esta função aproxima iterativamente o deltaX. A primeira iteração é para k = 0
-	deltaX = deslAnalit(L,L,E,A,F,0,0);
+	deltaX = deslAnalit(L,0,0);
 	for i = 0 : 1 : 15
-		deltaX = deslAnalit(L,L,E,A,F,k,deltaX);
+		deltaX = deslAnalit(L,k,deltaX);
 	end
 end
 
 function deslAnalit = getFuncAnal();
+	L=L;E=E;A=A;F=F;k=k;
 	if strcmp(data.funcstr,('sen(πx/L)'))
 		if data.state == 0
-			deslAnalit = @(x,L,E,A,F,k) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
+			deslAnalit = @(x) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
 		elseif data.state == 1
 			deslAnalit = @(x,L,E,A,F,k) (  (  ((L*pi).^2)*sin(pi*x/L) + x*((L/pi)-(k*(L.^2)/(pi*E*A)))  ) / (E*A)  );
 		elseif data.state >= 2
-			deslAnalit = @(x,L,E,A,F,k) (  (  ((L/pi).^2)*sin(pi*x/L) + (F*x) + (L*x/pi)  ) / (E*A)  );
+			deslAnalit = @(x) (  (  ((L/pi).^2)*sin(pi*x/L) + (F*x) + (L*x/pi)  ) / (E*A)  );
 		end
 	elseif strcmp(data.funcstr,('exp(x)'))
 		if data.state == 0
-			deslAnalit = @(x,L,E,A,F,k) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
+			deslAnalit = @(x) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
 		elseif data.state == 1
-			deslAnalit = @(x,L,E,A,F,k,deltaX) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
+			deslAnalit = @(x,k,deltaX) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 			deltaX = iterGetDeltaX(deslAnalit);
 			% Redefinir a função com constantes em vez de variáveis:
-			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
+			deslAnalit = @(x) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
-			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
+			deslAnalit = @(x) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
 		end
 	elseif strcmp(data.funcstr,'12x²+6')
 		if data.state == 0
-			deslAnalit = @(x,L,E,A,F,k) ( - ( (x.^4) + (3*x.^2) - (x*((3*L)+(L.^3))) ) / (E*A)  );
+			deslAnalit = @(x) ( - ( (x.^4) + (3*x.^2) - (x*((3*L)+(L.^3))) ) / (E*A)  );
 		elseif data.state >= 2
-			deslAnalit = @(x,L,E,A,F,k) ( - ( (x.^4) + (3*x.^2) - (F*x) - (4*x*(L.^3)) - (6*x*L) ) / (E*A)  );
+			deslAnalit = @(x) ( - ( (x.^4) + (3*x.^2) - (F*x) - (4*x*(L.^3)) - (6*x*L) ) / (E*A)  );
 		end
 	else  % Quando é um polinómio (cuidado, esparguete):
 		coef = data.coef;
@@ -122,9 +123,9 @@ function deslAnalit = getFuncAnal();
 		end
 		i2f = @(x) ((cc(7)*x.^8)+(cc(6)*x.^7)+(cc(5)*x.^6)+(cc(4)*x.^5)+(cc(3)*x.^4)+(cc(2)*x.^3)+(cc(1)*x.^2));
 		if data.state == 0
-			deslAnalit = @(x,L,E,A,F,k) (- ( (i2f(x) - (i2f(L)*x/L)) / (E*A) ) );
+			deslAnalit = @(x) (- ( (i2f(x) - (i2f(L)*x/L)) / (E*A) ) );
 		elseif data.state >= 2
-			deslAnalit = @(x,L,E,A,F,k) (- (( i2f(x) - F*x - (i1f(L)*x) )/(E*A)) );
+			deslAnalit = @(x) (- (( i2f(x) - F*x - (i1f(L)*x) )/(E*A)) );
 		end   % Fim da esparguete.
 	end
 end
@@ -157,8 +158,7 @@ if data.option == 3
 	top = 150;
 	for i = 5 : 5 : top
 		clc
-		printf('A calcular com 3 pontos...\n')
-		printf('%d/%d\n',i,top)
+		printf('A calcular com 3 pontos (%d/%d) \n',i,top)
 		data.n = n  = i;
 		h = L / (n - 1);
 		data.pontos = 3;
@@ -168,8 +168,7 @@ if data.option == 3
 	end
 	for i = 5 : 5 : top
 		clc
-		printf('A calcular com 5 pontos...\n')
-		printf('%d/%d\n',i,top)
+		printf('A calcular com 5 pontos (%d/%d) \n',i,top)
 		data.n = n  = i;
 		h = L / (n - 1);
 		data.pontos = 5;
@@ -182,7 +181,7 @@ if data.option == 3
 	printf('\nA calcular o erro relativo médio para 3 pontos...\n')
 	for i = 1 : 1 : length(u3)
 		for j = 2 : 1 : length(u3{i})-1
-			tempError(j-1) = ( u3{i}(2,j) - deslAnalit(u3{i}(1,j),L,E,A,F,k) )/deslAnalit(u3{i}(1,j),L,E,A,F,k);
+			tempError(j-1) = ( u3{i}(2,j) - deslAnalit(u3{i}(1,j)) ) / deslAnalit(u3{i}(1,j));
 		end
 		errorX(i)  = L / ( (i * 5) - 1 );
 		error3Y(i) = sum(abs(tempError))/(i*5);
@@ -190,7 +189,7 @@ if data.option == 3
 	printf('A calcular o erro relativo médio para 5 pontos...\n')
 	for i = 1 : 1 : length(u5)
 		for j = 2 : 1 : length(u5{i})-1
-			tempError(j-1) = ( u5{i}(2,j) - deslAnalit(u5{i}(1,j),L,E,A,F,k) )/deslAnalit(u5{i}(1,j),L,E,A,F,k);
+			tempError(j-1) = ( u5{i}(2,j) - deslAnalit(u5{i}(1,j)) ) / deslAnalit(u5{i}(1,j));
 		end
 		error5Y(i) = sum(abs(tempError))/(i*5);
 	end
@@ -239,7 +238,7 @@ if data.option == 2
 	printf('A calcular o erro relativo...\n')
 	for i = 2 : 1 : n-1
 		erroX(i-1) = u(1,i);
-		erroY(i-1) = abs( ( u(2,i) - deslAnalit(u(1,i),L,E,A,F,k) ) / deslAnalit(u(1,i),L,E,A,F,k) );
+		erroY(i-1) = abs( ( u(2,i) - deslAnalit(u(1,i)) ) / deslAnalit(u(1,i)) );
 	end
 end
 
@@ -251,7 +250,7 @@ for i = 1 : 1 : n
 end
 if data.option == 2
 	for i = 1 : 1 : n
-		aY(i) = deslAnalit(u(1,i),L,E,A,F,k) * (10.^9);  % Analiticamente
+		aY(i) = deslAnalit(u(1,i)) * (10.^9);  % Analiticamente
 	end
 end
 figure
