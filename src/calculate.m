@@ -69,6 +69,14 @@ function u = calcComForca();
 	end
 end
 
+function deltaX = iterGetDeltaX(deslAnalit);
+	% Esta função aproxima iterativamente o deltaX. A primeira iteração é para k = 0
+	deltaX = deslAnalit(L,L,E,A,F,0,0);
+	for i = 0 : 1 : 15
+		deltaX = deslAnalit(L,L,E,A,F,k,deltaX);
+	end
+end
+
 function deslAnalit = getFuncAnal();
 	if strcmp(data.funcstr,('sen(πx/L)'))
 		if data.state == 0
@@ -82,10 +90,9 @@ function deslAnalit = getFuncAnal();
 		if data.state == 0
 			deslAnalit = @(x,L,E,A,F,k) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
 		elseif data.state == 1
-			deltaX = ( ( (exp(L)*(L-1)) + 1 ) / (E*A) )
-			disp('')
-			disp(deltaX*k)
-			pause
+			deslAnalit = @(x,L,E,A,F,k,deltaX) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
+			deltaX = iterGetDeltaX(deslAnalit);
+			% Redefinir a função com constantes em vez de variáveis:
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x,L,E,A,F,k) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
