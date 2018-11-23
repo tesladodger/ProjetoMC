@@ -79,6 +79,7 @@ end
 
 function deslAnalit = getFuncAnal();
 	L=L;E=E;A=A;F=F;k=k;
+
 	if strcmp(data.funcstr,('sen(πx/L)'))
 		if data.state == 0
 			deslAnalit = @(x) (  ((L/pi).^2) * (sin(pi*x/L)) / (E*A)  );
@@ -87,6 +88,7 @@ function deslAnalit = getFuncAnal();
 		elseif data.state >= 2
 			deslAnalit = @(x) (  (  ((L/pi).^2)*sin(pi*x/L) + (F*x) + (L*x/pi)  ) / (E*A)  );
 		end
+
 	elseif strcmp(data.funcstr,('exp(x)'))
 		if data.state == 0
 			deslAnalit = @(x) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
@@ -98,12 +100,14 @@ function deslAnalit = getFuncAnal();
 		elseif data.state >= 2
 			deslAnalit = @(x) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
 		end
+
 	elseif strcmp(data.funcstr,'12x²+6')
 		if data.state == 0
 			deslAnalit = @(x) ( - ( (x.^4) + (3*x.^2) - (x*((3*L)+(L.^3))) ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x) ( - ( (x.^4) + (3*x.^2) - (F*x) - (4*x*(L.^3)) - (6*x*L) ) / (E*A)  );
 		end
+
 	else  % Quando é um polinómio (cuidado, esparguete):
 		coef = data.coef;
 		for i = 7 : -1 : 1  % Coeficientes do primeiro integral
