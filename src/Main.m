@@ -4,6 +4,7 @@
 % axial. O utilizador pode também aplicar uma força ou uma mola na extremidade
 % da barra, estando a outra extremidade encastrada.  Pode também suspender a
 % barra entre duas molas.
+% Consulte man.m para mais detalhes.
 
 % Programado em GNU Octave (C) 4.4.1, para 'x86_64-pc-linux-gnu'
 
@@ -25,9 +26,10 @@ badInput = false;
 while repeat
 	clc
 	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n\n')
-	printf('1 - Cálculo do deslocamento (função genérica)\n')
-	printf('2 - Cálculo do deslocamento (funções pré-definidas)\n')
+	printf('1 - Cálculo do deslocamento\n')
+	printf('2 - Funções predefinidas\n')
 	printf('3 - Testar o erro do programa\n')
+	printf('4 - Manual\n')
 	printf('0 - Terminar \n')
 	
 	if badInput
@@ -45,6 +47,9 @@ while repeat
 
 	elseif a == '3'
 		gatherVars(3);
+
+	elseif a == '4'
+		man();
 
 	elseif a == '0' || a == 'q'
 		printf('A sair...\n')
