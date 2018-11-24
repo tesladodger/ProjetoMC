@@ -9,8 +9,8 @@ function gatherVars(option)
 
 data.option = option;
 data.state  = 403;  % data.state não é acedido
-                    % até se obter a carga axial
-                    % (ver função drawState)
+% até se obter a carga axial
+% (ver função drawState)
 
 if true % option == 3
 	clc

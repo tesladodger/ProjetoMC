@@ -1,6 +1,6 @@
 function drawState(state)
 
-% O estado (state) da barra só pode ser 1 de 4 possíveis em cada momento,
+% O estado (state) da barra só pode ser 1 de 5 possíveis em cada momento,
 % permitindo-nos desenhá-lo no terminal, com o mínimo de variáveis. Isto ajuda
 % o utilizador a perceber se está a introduzir corretamente as caracterís-
 % ticas do problema (uma imagem ASCII vale mais que 1000 caracteres).
@@ -12,7 +12,7 @@ if state == 403 % Estado ainda não interessa
 elseif state == 0
 	printf('/|                         |\\\n')
 	printf('/|_________________________|\\\n')
-	printf('/|           a             |\\\n')
+	printf('/|           f(x)          |\\\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |\\\n')
 	printf('/|_________________________|\\\n')
 	printf('/|                         |\\\n')
@@ -20,7 +20,7 @@ elseif state == 0
 elseif state == 1
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|           a             |    k\n')
+	printf('/|           f(x)          |    k\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |∫∫∫∫∫∫∫∫∫∫\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
@@ -28,7 +28,7 @@ elseif state == 1
 elseif state == 2
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|           a             |    F\n')
+	printf('/|           f(x)          |    F\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |=======>\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
@@ -36,7 +36,7 @@ elseif state == 2
 elseif state == 3
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|           a             |    F\n')
+	printf('/|           f(x)          |    F\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |<=======\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
@@ -44,7 +44,7 @@ elseif state == 3
 elseif state == 4
 	printf('/|\n')
 	printf('/|_________________________\n')
-	printf('/|           a             |\n')
+	printf('/|           f(x)          |\n')
 	printf('/| ->  ->  ->  ->  ->  ->  |\n')
 	printf('/|_________________________|\n')
 	printf('/|\n')
