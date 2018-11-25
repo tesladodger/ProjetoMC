@@ -1,5 +1,4 @@
 function printError(erCode)
-
 % Para evitar escrever os erros para todos os inputs
 
 if     ( erCode == 0 ) printf('Erro: Input inválido!\n')

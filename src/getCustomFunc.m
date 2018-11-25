@@ -5,36 +5,38 @@ function [fun, str] = getCustomFunc();
 % Tem como argumentos de saída a function handle 'fun' e a string
 % que representa essa função (ver reviewData).
 
+
 badInput = false;
 while true
-	clc
-	printf('Introduza a função da carga axial \n')
-	printf('Ex.: @(x) sin(pi*x/L)\n')
-	
-	if badInput
-		printError(0);
-		badInput = false;
-	end
+    clc
+    printf('Introduza a função da carga axial \n')
+    printf('Ex.: @(x) sin(pi*x/L)\n')
 
-	str = input('==> ', 's');
+    if badInput
+        printError(0);
+        badInput = false;
+    end
 
-	try
-		fun = str2func(str);
-	catch error
-		badInput = true;
-		continue;
-	end
-	try
-		% A função pode ser válida e não ter significado lógico
-		% Deste modo, é testada com alguns valores:
-		y = fun(1);
-		y = fun(0);
-		y = fun(pi);
-	catch error
-		badInput = true;
-		continue
-	end
-	break;
+    str = input('==> ', 's');
+
+    try
+        fun = str2func(str);
+    catch error
+        badInput = true;
+        continue;
+    end
+
+    try
+        % A função pode ser válida e não ter significado lógico
+        % Deste modo, é testada com alguns valores:
+        y = fun(1);
+        y = fun(0);
+        y = fun(pi);
+    catch error
+        badInput = true;
+        continue
+    end
+    break;
 end
 
 expression = '@.*?\)'  

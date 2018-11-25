@@ -24,43 +24,42 @@ badInput = false;
 
 
 while repeat
-	clc
-	printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n\n')
-	printf('1 - Cálculo do deslocamento\n')
-	printf('2 - Funções predefinidas\n')
-	printf('3 - Testar o erro do programa\n')
-	printf('4 - Manual\n')
-	printf('0 - Terminar \n')
-	
-	if badInput
-		printError(0);
-		badInput = false;
-	end
-	
-	a = input('==> ', 's');
+    clc
+    printf('  EQUILÍBRIO ESTÁTICO DE BARRAS \n\n')
+    printf('1 - Cálculo do deslocamento\n')
+    printf('2 - Funções predefinidas\n')
+    printf('3 - Testar o erro do programa\n')
+    printf('4 - Manual\n')
+    printf('0 - Terminar \n')
 
-	if a == '1'
-		gatherVars(1);
-	
-	elseif a == '2'
-		gatherVars(2);
+    if badInput
+        printError(0);
+        badInput = false;
+    end
 
-	elseif a == '3'
-		gatherVars(3);
+    a = input('==> ', 's');
 
-	elseif a == '4'
-		man();
+    if a == '1'
+        gatherVars(1);
 
-	elseif a == '0' || a == 'q'
-		printf('A sair...\n')
-		repeat = false;
-		clear;
-		break;
-	
-	else
-		badInput = true;
-		clc
-	
-	end
+    elseif a == '2'
+        gatherVars(2);
+
+    elseif a == '3'
+        gatherVars(3);
+
+    elseif a == '4'
+        man();
+
+    elseif a == '0' || a == 'q'
+        printf('A sair...\n')
+        repeat = false;
+        clear;
+        break;
+
+    else
+        badInput = true;
+        clc
+
+    end
 end
-
