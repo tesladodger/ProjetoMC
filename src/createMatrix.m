@@ -41,7 +41,7 @@ if data.pontos == 3
 	elseif data.state == 1
 		matrix(n,n-2) = 1/2;
 		matrix(n,n-1) =  -2;
-		matrix(n,n)   = 3 + h*k/(E*A);
+		matrix(n,n)   = 3/2 + h*k/(E*A);
 	elseif data.state == 0
 	matrix(n,n) = 1;
 	end

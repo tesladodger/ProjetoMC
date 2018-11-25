@@ -38,7 +38,7 @@ function u = calcComMola();
 		end
 
 		uTemp = u(2,i);
-		u(2,i) += ( invMatrix(i,n) * ( -h*k*uTemp/(E*A) ) );
+		u(2,i) += ( invMatrix(i,n) * ( -h * k * uTemp / (E*A) ) );
 
 		msg = sprintf('%d/%d', i, n);
 		printf([reverseStr, msg])
@@ -252,8 +252,8 @@ if data.option == 1
 	scatter(X,dfY,'*')
 	xlim([0 L])
 	title('Gráfico do deslocamento')
-	xlabel('x (m)')
-	ylabel('u(x) (nm)')
+	xlabel('x [m]')
+	ylabel('u(x) [nm]')
 elseif data.option == 2
 	subplot(2,1,1);
 	scatter(X,dfY,'*')
@@ -263,14 +263,14 @@ elseif data.option == 2
 	xlim([0 L])
 	legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
 	title('Gráfico do deslocamento')
-	xlabel('x (m)')
-	ylabel('u(x) (nm)')
+	xlabel('x [m]')
+	ylabel('u(x) [nm]')
 
 	subplot(2,1,2);
 	scatter(erroX,erroY)
 	xlim([0 L])
 	title('Erro relativo')
-	xlabel('x (m)')
+	xlabel('x [m]')
 	ylabel('erro relativo')
 
 	hold off
@@ -281,4 +281,4 @@ printf('\nPressione qualquer tecla para continuar...')
 pause
 
 
-end % if you end a nested function you need to end the parent
+end % if you have a nested function you need to end the parent
