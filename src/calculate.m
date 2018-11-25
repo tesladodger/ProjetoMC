@@ -69,15 +69,7 @@ function u = calcComForca();
 	end
 end
 
-function deltaX = iterGetDeltaX(deslAnalit);
-	% Esta função aproxima iterativamente o deltaX. A primeira iteração é para k = 0
-	deltaX = deslAnalit(L,0,0);
-	for i = 0 : 1 : 15
-		deltaX = deslAnalit(L,k,deltaX);
-	end
-end
-
-function deslAnalit = getFuncAnal();
+function deslAnalit = getFuncAnalit();
 	L=L;E=E;A=A;F=F;k=k;
 
 	if strcmp(data.funcstr,('sen(πx/L)'))
@@ -93,10 +85,8 @@ function deslAnalit = getFuncAnal();
 		if data.state == 0
 			deslAnalit = @(x) ( - ( exp(x) + (x/L)*(1-exp(L)) - 1 ) / (E*A) );
 		elseif data.state == 1
-			deslAnalit = @(x,k,deltaX) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
-			deltaX = iterGetDeltaX(deslAnalit);
-			% Redefinir a função com constantes em vez de variáveis:
-			deslAnalit = @(x) (  ( -exp(x) - k*deltaX*x + exp(L)*x + 1 ) / (E*A)  );
+			C1 = ( exp(L) + k*exp(L)/(E*A) - k/(E*A) ) / ( 1 + k*L/(E*A) );
+			deslAnalit = @(x) (  ( -exp(x) + C1*x + 1 ) / (E*A)  );
 		elseif data.state >= 2
 			deslAnalit = @(x) (  ( -exp(x) + F*x + exp(L)*x + 1) / (E*A)  );
 		end
@@ -181,7 +171,7 @@ if data.option == 3
 		u5{i/5} = calcFunc();
 	end
 	printf('\nA calcular analiticamente...\n')
-	deslAnalit = getFuncAnal();
+	deslAnalit = getFuncAnalit();
 	printf('\nA calcular o erro relativo médio para 3 pontos...\n')
 	for i = 1 : 1 : length(u3)
 		for j = 2 : 1 : length(u3{i})-1
@@ -238,7 +228,7 @@ printf('\n')
 
 if data.option == 2
 	printf('A calcular analiticamente...\n')
-	deslAnalit = getFuncAnal();
+	deslAnalit = getFuncAnalit();
 	printf('A calcular o erro relativo...\n')
 	for i = 2 : 1 : n-1
 		erroX(i-1) = u(1,i);
