@@ -37,9 +37,6 @@ function u = calcComMola();
             u(2,i) += ( invMatrix(i,j) * ( -(h.^2) * f(x) / (E*A) ) );
         end
 
-        uTemp = u(2,i);
-        u(2,i) += ( invMatrix(i,n) * ( -h * k * uTemp / (E*A) ) );
-
         msg = sprintf('%d/%d', i, n);
         printf([reverseStr, msg])
         reverseStr = repmat(sprintf('\b'), 1, length(msg));
