@@ -73,7 +73,8 @@ function deslAnalit = getFuncAnalit();
         if data.state == 0
             deslAnalit = @(x) (((L/pi).^2)*(sin(pi*x/L))/(E*A));
         elseif data.state == 1
-            deslAnalit = @(x,L,E,A,F,k) (  (  ((L*pi).^2)*sin(pi*x/L) + x*((L/pi)-(k*(L.^2)/(pi*E*A)))  ) / (E*A)  );
+            C1 = (L/pi)/(1+(k*L/(E*A)));
+            deslAnalit = @(x) ((((L/pi).^2)*sin(pi*x/L)+x*C1)/(E*A));
         elseif data.state >= 2
             deslAnalit = @(x) ((((L/pi).^2)*sin(pi*x/L)+(F*x)+(L*x/pi))/(E*A));
         end
@@ -82,8 +83,8 @@ function deslAnalit = getFuncAnalit();
         if data.state == 0
             deslAnalit = @(x) (-(exp(x)+(x/L)*(1-exp(L))-1)/(E*A));
         elseif data.state == 1
-            C1 = ( exp(L) + k*exp(L)/(E*A) - k/(E*A) ) / ( 1 + k*L/(E*A) );
-            deslAnalit = @(x) (  ( -exp(x) + C1*x + 1 ) / (E*A)  );
+            C1 = (exp(L)+k*exp(L)/(E*A)-k/(E*A))/(1+k*L/(E*A));
+            deslAnalit = @(x) ((-exp(x)+C1*x+1)/(E*A));
         elseif data.state >= 2
             deslAnalit = @(x) ((-exp(x)+F*x+exp(L)*x+1)/(E*A));
         end
@@ -91,6 +92,9 @@ function deslAnalit = getFuncAnalit();
     elseif strcmp(data.funcstr,'12x²+6')
         if data.state == 0
             deslAnalit = @(x) (-((x.^4)+(3*x.^2)-(x*((3*L)+(L.^3))))/(E*A));
+        elseif data.state == 1
+            C1 = (4*(L.^3)+6*L+(k*((L.^4)+3*(L.^2)))/(E*A))/(1+k*L/(E*A));
+            deslAnalit = @(x) (-(x.^4)-3*(x.^2)+C1*x)/(E*A);
         elseif data.state >= 2
             deslAnalit = @(x) (-((x.^4)+(3*x.^2)-(F*x)-(4*x*(L.^3))-(6*x*L))/(E*A));
         end
@@ -115,6 +119,9 @@ function deslAnalit = getFuncAnalit();
         i2f = @(x) ((cc(7)*x.^8)+(cc(6)*x.^7)+(cc(5)*x.^6)+(cc(4)*x.^5)+(cc(3)*x.^4)+(cc(2)*x.^3)+(cc(1)*x.^2));
         if data.state == 0
             deslAnalit = @(x) (-((i2f(x)-(i2f(L)*x/L))/(E*A)));
+        elseif data.state == 1
+            C1 = ( k*i2f(L)/(E*A) + i1f(L) ) / (1+k*L/(E*A));
+            deslAnalit = @(x) ( -i2f(x) + C1*x )/(E*A);
         elseif data.state >= 2
             deslAnalit = @(x) (-((i2f(x)-F*x-(i1f(L)*x))/(E*A)));
         end   % Fim da esparguete.
