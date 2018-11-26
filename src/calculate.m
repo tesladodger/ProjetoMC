@@ -144,6 +144,7 @@ end
 reverseStr = '';
 
 
+% _______________________ Calcular o erro para diferentes valores de n _______
 if data.option == 3
     if     (data.state == 0) calcFunc = @() calcEntreParedes();
     elseif (data.state == 1) calcFunc = @() calcComMola();
@@ -177,15 +178,15 @@ if data.option == 3
         for j = 2 : 1 : length(u3{i})-1
             tempError(j-1) = ( u3{i}(2,j) - deslAnalit(u3{i}(1,j)) ) / deslAnalit(u3{i}(1,j));
         end
-        errorX(i)  = L / ( (i * 5) - 1 );
-        error3Y(i) = sum(abs(tempError))/(i*5);
+        errorX(i)  = abs(log10(L / ( (i * 5) - 1 )));
+        error3Y(i) = abs(log10(sum(abs(tempError))/(i*5)));
     end
     printf('A calcular o erro relativo médio para 5 pontos...\n')
     for i = 1 : 1 : length(u5)
         for j = 2 : 1 : length(u5{i})-1
             tempError(j-1) = ( u5{i}(2,j) - deslAnalit(u5{i}(1,j)) ) / deslAnalit(u5{i}(1,j));
         end
-        error5Y(i) = sum(abs(tempError))/(i*5);
+        error5Y(i) = abs(log10(sum(abs(tempError))/(i*5)));
     end
     figure
     subplot(2,1,1)
