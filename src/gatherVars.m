@@ -2,29 +2,25 @@ function gatherVars(option)
 
 % Recolhe as variáveis necessárias para o posterior cálculo.  Todas estas
 % variáveis estão sob a classe data.  Chama a função que resolve a equação
-% diferencial pelo método de diferenças finitas (calculate).  Recebe do Main
-% a opção escolhida.  Não retorna nenhuma variável ao Main.  
+% diferencial pelo método de diferenças finitas (calculate).  Recebe do main
+% a opção escolhida.  Não retorna nenhuma variável ao main.  
 
 
 data.option = option;
 data.state  = 403;  % data.state não é acedido até se obter a carga axial
 % (ver função drawState)
 
-if true % option == 3
-    clc
-    drawState(0);
-    printf('Módulo de Young:  200 GPa \n')
-    printf('Área da secção:  0.05 m²  \n')
-    printf('Comprimento:        5 m   \n')
-    a = input('Deseja prosseguir com estes parametros? [Y/n] ', 's');
-    if a == 'y' || a == 'Y' || size(a) == 0
-        data.ymodul = 200 * (10.^9);
-        data.area   = 0.05;
-        data.comp   = 5;
-        skip        = true;
-    else
-        skip = false;
-    end
+clc
+drawState(0);
+printf('Módulo de Young:  200 GPa \n')
+printf('Área da secção:  0.05 m²  \n')
+printf('Comprimento:        5 m   \n')
+a = input('Deseja prosseguir com estes parâmetros? [Y/n] ', 's');
+if a == 'y' || a == 'Y' || size(a) == 0
+    data.ymodul = 200 * (10.^9);
+    data.area   = 0.05;
+    data.comp   = 5;
+    skip        = true;
 else
     skip = false;
 end
@@ -99,7 +95,6 @@ else
     end
 end
 
-
 if !(option == 3)
     badInput = false;
     while true
@@ -134,7 +129,6 @@ if !(option == 3)
         data.n = 3;
     end
 end
-
 
 goToCalculations = reviewData(data);
 if goToCalculations

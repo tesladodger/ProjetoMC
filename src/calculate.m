@@ -67,7 +67,10 @@ function u = calcComForca();
 end
 
 function deslAnalit = getFuncAnalit();
+% Repositório de funções calculadas analíticamente
     L=L;E=E;A=A;F=F;k=k; % Não sei porque é que tenho de fazer isto
+    % Por algum motivo, se não chamar as constantes dentro da função, não podem
+    % ser usadas na function handle
 
     if strcmp(data.funcstr,('sen(πx/L)'))
         if data.state == 0
@@ -120,8 +123,8 @@ function deslAnalit = getFuncAnalit();
         if data.state == 0
             deslAnalit = @(x) (-((i2f(x)-(i2f(L)*x/L))/(E*A)));
         elseif data.state == 1
-            C1 = ( k*i2f(L)/(E*A) + i1f(L) ) / (1+k*L/(E*A));
-            deslAnalit = @(x) ( -i2f(x) + C1*x )/(E*A);
+            C1 = (k*i2f(L)/(E*A)+i1f(L))/(1+k*L/(E*A));
+            deslAnalit = @(x) (-i2f(x)+C1*x)/(E*A);
         elseif data.state >= 2
             deslAnalit = @(x) (-((i2f(x)-F*x-(i1f(L)*x))/(E*A)));
         end   % Fim da esparguete.
@@ -148,7 +151,7 @@ end
 reverseStr = '';
 
 
-% _______________________ Calcular o erro para diferentes valores de n _______
+% ________________ Calcular o erro para diferentes valores de n
 if data.option == 3
     if     (data.state == 0) calcFunc = @() calcEntreParedes();
     elseif (data.state == 1) calcFunc = @() calcComMola();
@@ -211,6 +214,7 @@ if data.option == 3
 end
 
 
+
 n = double(data.n);
 h = L / (n - 1);
 
@@ -252,19 +256,21 @@ if data.option == 2
         aY(i) = deslAnalit(u(1,i)) * (10.^9);  % Analiticamente
     end
 end
+
 figure
 if data.option == 1
-    scatter(X,dfY,'*')
+    scatter(X,dfY,'*')   % Desenha apenas df
     xlim([0 L])
     title('Gráfico do deslocamento')
     xlabel('x [m]')
     ylabel('u(x) [nm]')
+
 elseif data.option == 2
     subplot(2,1,1);
-    scatter(X,dfY,'*')
+    scatter(X,dfY,'*')     % Desenhar df...
 
     hold on
-    scatter(X,aY)
+    scatter(X,aY)          % e a analítica...
     xlim([0 L])
     legend({'Diferenças finitas','Analiticamente'},'Location','northwest')
     title('Gráfico do deslocamento')
@@ -272,7 +278,7 @@ elseif data.option == 2
     ylabel('u(x) [nm]')
 
     subplot(2,1,2);
-    scatter(erroX,erroY)
+    scatter(erroX,erroY)   % e o erro
     xlim([0 L])
     title('Erro relativo')
     xlabel('x [m]')
@@ -284,6 +290,5 @@ end
 
 printf('\nPressione qualquer tecla para continuar...')
 pause
-
 
 end % if you have a nested function you need to end the parent

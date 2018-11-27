@@ -23,6 +23,7 @@ end
 printf('\nA criar a matriz dos coeficientes...\n')
 reverseStr = '';
 matrix     = zeros(n,n);
+% ______________________ Matriz para 3 pontos
 if data.pontos == 3
     matrix(1,1) = 1;
     for i = 2 : 1 : n-1
@@ -46,6 +47,7 @@ if data.pontos == 3
         matrix(n,n)   =    1;
     end
 
+% ______________________ Matriz para 5 pontos
 elseif data.pontos == 5
     matrix(1,1) = 1;
     for i = 3 : 1 : n-2
