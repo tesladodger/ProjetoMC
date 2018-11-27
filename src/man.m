@@ -23,7 +23,7 @@ printf('finitas e a expresão analítica.\n\n')
 
 printf('A terceira opção realiza os cálculos para vários números de nós, tanto para\n')
 printf('diferenças finitas de segundo como de quarto grau, apresentando o erro em\n')
-primtf('função do espaçamento (em escala logarítmica).\n\n')
+printf('função do espaçamento (em escala logarítmica).\n\n')
 
 printf('...')
 pause
