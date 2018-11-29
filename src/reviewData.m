@@ -18,13 +18,12 @@ end
 if data.state == 2 || data.state == 3
     printf('Força F:               %d N \n', data.force )
 end
-printf('Função da carga axial: %s     \n', data.funcstr )
 if !(data.option == 3)
     printf('Divisões para cálculo: %d \n', data.n )
     printf('Número de pontos (df): %d \n', data.pontos )
 end
 
-a = input('Deseja proceguir para os cálculos? [Y/n] ', 's');
+a = input('Deseja prosseguir para os cálculos? [Y/n] ', 's');
 if a == 'Y' || a == 'y' || size(a) == 0
     goToCalculations = true;
 else

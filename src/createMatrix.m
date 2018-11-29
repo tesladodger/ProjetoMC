@@ -83,5 +83,5 @@ elseif data.pontos == 5
     end
 end
 
-printf('\nA inverter a matrix...\n')
+printf('\nA inverter a matriz...\n')
 invMatrix = inv(matrix);
