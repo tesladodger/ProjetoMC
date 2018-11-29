@@ -6,7 +6,10 @@
 % barra entre duas molas.
 % Consulte man.m para mais detalhes.
 
-% Programado em GNU Octave (C) 4.4.1, para 'x86_64-pc-linux-gnu'
+% Programado em GNU Octave (C) 4.4.1, para x86_64-pc-linux-gnu
+% Existem alguns problemas em Windows no suporte do Octave para UTF-8, pelo que
+% characteres com acentos nos gráficos podem aparecer incorretos. A versão para
+% Linux suporta completamente o encoding utilizado.
 
 % Autores:         ID:
 % André Martins    87149

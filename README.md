@@ -10,19 +10,6 @@
 * Inês Véstia;
 
 
-## To do:
-
-1. Forças
-2. Molas
-
-
-## Convenções:
-
-* Funções: verboDescrição (eg. getVar);
-* Variáveis: letra minúscula (eg. area); camelCase (eg. badInput);
-* Booleans: devem ser descritos pela positiva (eg. isMola = true ✔️ / isNotMola = false ❌);
-
-
 ## Notas:
 
-Programado usando GNU Octave 4.4.1 em Linux.
+Programado usando GNU Octave (C) 4.4.1 em Linux.

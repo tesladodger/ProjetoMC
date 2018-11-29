@@ -1,8 +1,8 @@
-function [fun, str] = getCustomFunc();
+function [fun, str] = getCustomFunc(L);
 
 % Pede input da função que representa a distribuição do esforço axial.
-% Não necessita de argumentos de entrada.
-% Tem como argumentos de saída a function handle 'fun' e a string
+% Recebe o comprimento da barra como entrada, permitindo uma função que dependa
+% do mesmo.  Tem como argumentos de saída a function handle 'fun' e a string
 % que representa essa função (ver reviewData).
 
 

@@ -38,7 +38,6 @@ function getFunky()
 
     % É por causa disto que indices começam do zero!!!
     pol = @(x) ( coef(7)*x^6 + coef(6)*x^5 + coef(5)*x^4 + coef(4)*x^3 + coef(3)*x^2 + coef(2)*x + coef(1) );
-    % É por causa disto que indices começam do zero!!!
 end
 
 

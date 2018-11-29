@@ -35,7 +35,7 @@ if !skip
 end
 
 if option == 1
-    [data.cargaAxial, data.funcstr] = getCustomFunc();
+    [data.cargaAxial, data.funcstr] = getCustomFunc(data.comp);
 elseif option == 2 || option == 3
     badInput = false;
     while true
@@ -80,7 +80,7 @@ a = input('Existe uma mola na extremidade direita da barra? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
     data.state += 1; 
     message = ('Constante da mola (N/m):\n');
-    data.k  = getInput(message, data.state, 1); % MUDA PARA 0!!!
+    data.k  = getInput(message, data.state, 0);
 else
     clc
     drawState(data.state);
