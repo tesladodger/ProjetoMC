@@ -12,14 +12,14 @@ data.state  = 403;  % data.state não é acedido até se obter a carga axial
 
 clc
 drawState(0);
-printf('Módulo de Young:  200 GPa \n')
-printf('Área da secção:  0.05 m²  \n')
-printf('Comprimento:        5 m   \n')
+printf('Módulo de Young:  200   GPa \n')
+printf('Área da secção:   0.001 m²  \n')
+printf('Comprimento:      1     m   \n')
 a = input('Deseja prosseguir com estes parâmetros? [Y/n] ', 's');
 if a == 'y' || a == 'Y' || size(a) == 0
     data.ymodul = 200 * (10.^9);
-    data.area   = 0.05;
-    data.comp   = 5;
+    data.area   = 0.001;
+    data.comp   = 1;
     skip        = true;
 else
     skip = false;

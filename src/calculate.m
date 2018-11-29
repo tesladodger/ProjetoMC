@@ -157,7 +157,9 @@ if data.option == 3
     elseif (data.state == 1) calcFunc = @() calcComMola();
     elseif (data.state >= 2) calcFunc = @() calcComForca();
     end
-    top = 150;
+
+    top = 250;
+
     for i = 5 : 5 : top
         clc
         printf('A calcular com 3 pontos (%d/%d) \n',i,top)
@@ -168,6 +170,7 @@ if data.option == 3
         printf('A calcular o deslocamento\n')
         u3{i/5} = calcFunc();
     end
+
     for i = 5 : 5 : top
         clc
         printf('A calcular com 5 pontos (%d/%d) \n',i,top)
@@ -178,8 +181,10 @@ if data.option == 3
         printf('A calcular o deslocamento...\n')
         u5{i/5} = calcFunc();
     end
+
     printf('\nA calcular analiticamente...\n')
     deslAnalit = getFuncAnalit();
+
     printf('\nA calcular o erro relativo médio para 3 pontos...\n')
     for i = 1 : 1 : length(u3)
         for j = 2 : 1 : length(u3{i})-1
@@ -195,6 +200,7 @@ if data.option == 3
         end
         error5Y(i) = abs(log10(sum(abs(tempError))/(i*5)));
     end
+
     figure
     subplot(2,1,1)
     loglog(errorX,error3Y,'*')
